@@ -16,12 +16,12 @@ Revisión realizada el 4 de noviembre de 2026 sobre el Drive público **Soporte 
 | Métricas | Mural/consigna | Problema, interés, usabilidad y PyMEs | Plan de validación | Completo | Metas marcadas como hipótesis, sin resultados ficticios |
 | Identidad visual | Pedido del proyecto | Logo, paleta, tipografía, tokens, componentes, estados | Sistema visual | Implementado | Consistencia, originalidad y WCAG 2.2 AA |
 | GitHub | Pedido del proyecto | Repo privado, main, CI, README, issues/milestones | Repositorio remoto | Completo en alcance verificable | Cuenta `pedr0torcivia`, repo privado, `main`, CI e Issues 1–4 verificados |
-| Mural | Tablero oficial | Cuadros del grupo, síntesis legible, evidencia | Tablero editado | Preparado; publicación pendiente | Entrada como visitante, cambios guardados, captura |
+| Mural | Tablero oficial | Cuadros del grupo, síntesis legible, evidencia | Tablero editado | Verificado | Ingreso como `PhishNet`, cuadros inspeccionados y enlace real añadido; conteo 156→157 widgets |
 
 ## Evidencia y límites de auditoría
 
 - Se exportaron y leyeron los documentos Google: Material Soporte PTM, Team Canvas, Material Soporte (Abundancia), ExO Canvas e instrucciones DEMO.
 - Se inventariaron los PDF visibles: Plantilla PTM; VATES ExO Technologies; ejemplo ExO Canvas Airbnb; 50 Business Model Examples; Modelado de Negocios; Propuesta de Valor; Cómo realizar una Demo.
 - No se inventaron fechas académicas. El cronograma usa una secuencia relativa de cuatro sprints y debe alinearse con el aula virtual o calendario del docente.
-- La edición del Mural requiere enviar un nombre visible de visitante; la publicación es una acción externa y queda separada de la preparación local.
+- El Mural se editó como visitante `PhishNet`. Se preservó el contenido existente y se añadió en Demo el repositorio verificado, el stack y el estado de pruebas/CI.
 - Repositorio verificado: `https://github.com/pedr0torcivia/PhishNet` (privado, rama por defecto `main`). Milestones/Projects no se crearon porque las fechas oficiales no estaban disponibles.

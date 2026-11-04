@@ -60,6 +60,7 @@ No se requieren variables de entorno. `.env.example` documenta la futura integra
 - [Validación del problema](docs/validacion-problema.md)
 - [Arquitectura y seguridad](docs/arquitectura.md)
 - [Identidad visual](docs/identidad-visual.md)
+- [Evidencia de actualización del Mural](docs/mural-evidencia.md)
 - [Pendientes reales](docs/pendientes.md)
 
 ## Limitaciones
