@@ -15,7 +15,7 @@ Revisión realizada el 4 de noviembre de 2026 sobre el Drive público **Soporte 
 | Demo | Drive `06` | Bosquejo funcional, máximo 8 h según guía | Web responsive | Implementado | Navegable, análisis real local y límites explícitos |
 | Métricas | Mural/consigna | Problema, interés, usabilidad y PyMEs | Plan de validación | Completo | Metas marcadas como hipótesis, sin resultados ficticios |
 | Identidad visual | Pedido del proyecto | Logo, paleta, tipografía, tokens, componentes, estados | Sistema visual | Implementado | Consistencia, originalidad y WCAG 2.2 AA |
-| GitHub | Pedido del proyecto | Repo privado, main, CI, README, issues/milestones | Repositorio remoto | Pendiente de acción externa | Cuenta verificada y URL real |
+| GitHub | Pedido del proyecto | Repo privado, main, CI, README, issues/milestones | Repositorio remoto | Completo en alcance verificable | Cuenta `pedr0torcivia`, repo privado, `main`, CI e Issues 1–4 verificados |
 | Mural | Tablero oficial | Cuadros del grupo, síntesis legible, evidencia | Tablero editado | Preparado; publicación pendiente | Entrada como visitante, cambios guardados, captura |
 
 ## Evidencia y límites de auditoría
@@ -24,3 +24,4 @@ Revisión realizada el 4 de noviembre de 2026 sobre el Drive público **Soporte 
 - Se inventariaron los PDF visibles: Plantilla PTM; VATES ExO Technologies; ejemplo ExO Canvas Airbnb; 50 Business Model Examples; Modelado de Negocios; Propuesta de Valor; Cómo realizar una Demo.
 - No se inventaron fechas académicas. El cronograma usa una secuencia relativa de cuatro sprints y debe alinearse con el aula virtual o calendario del docente.
 - La edición del Mural requiere enviar un nombre visible de visitante; la publicación es una acción externa y queda separada de la preparación local.
+- Repositorio verificado: `https://github.com/pedr0torcivia/PhishNet` (privado, rama por defecto `main`). Milestones/Projects no se crearon porque las fechas oficiales no estaban disponibles.

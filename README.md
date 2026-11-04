@@ -27,6 +27,12 @@ UI React → validación → motor heurístico local → resultado explicable
                                       └──────→ historial local opcional
 ```
 
+## Capturas verificadas
+
+![Landing de PhishNet en escritorio](design/screenshots/landing-desktop.png)
+
+La versión móvil verificada está en [`design/screenshots/landing-mobile.png`](design/screenshots/landing-mobile.png).
+
 ## Ejecutar
 
 Requiere Node.js 22 o compatible.
