@@ -13,6 +13,14 @@ for (const shot of [
 ]) {
   const page = await browser.newPage({ viewport: shot.viewport, deviceScaleFactor: 1 })
   await page.goto('http://127.0.0.1:5173/#inicio', { waitUntil: 'networkidle' })
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.body.scrollHeight; y += Math.max(420, innerHeight * .75)) {
+      scrollTo({ top: y, behavior: 'instant' })
+      await new Promise(resolve => setTimeout(resolve, 80))
+    }
+    scrollTo({ top: 0, behavior: 'instant' })
+    await new Promise(resolve => setTimeout(resolve, 150))
+  })
   await page.screenshot({ path: path.join(root, 'design', 'screenshots', shot.name), fullPage: true })
   await page.close()
 }
