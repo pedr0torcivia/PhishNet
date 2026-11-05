@@ -12,7 +12,8 @@ for (const shot of [
   { name: 'landing-mobile.png', viewport: { width: 390, height: 844 } },
 ]) {
   const page = await browser.newPage({ viewport: shot.viewport, deviceScaleFactor: 1 })
-  await page.goto('http://127.0.0.1:5173/#inicio', { waitUntil: 'networkidle' })
+  await page.goto('http://127.0.0.1:5173/#inicio', { waitUntil: 'domcontentloaded' })
+  await page.waitForTimeout(500)
   await page.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += Math.max(420, innerHeight * .75)) {
       scrollTo({ top: y, behavior: 'instant' })
