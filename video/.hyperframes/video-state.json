@@ -1,0 +1,439 @@
+{
+  "version": 1,
+  "historyId": "894acec1-6234-45ea-8815-c500ee09d412",
+  "currentRevision": "3bd78477-681e-4463-805b-333dbcdf28d9",
+  "pendingChanges": false,
+  "files": {
+    "assets/app-analysis-guidance.png": {
+      "hash": "869f2315c35b5f53447c1a1ae85d805b154e2507d6545af54066beb5c89a40a4",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/86/869f2315c35b5f53447c1a1ae85d805b154e2507d6545af54066beb5c89a40a4"
+    },
+    "assets/app-analysis-input.png": {
+      "hash": "0329264122c657174d560c33eb05cd00945c1da2b34c0d1fd87b5b7defbb8b54",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/03/0329264122c657174d560c33eb05cd00945c1da2b34c0d1fd87b5b7defbb8b54"
+    },
+    "assets/app-analysis-result.png": {
+      "hash": "869f2315c35b5f53447c1a1ae85d805b154e2507d6545af54066beb5c89a40a4",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/86/869f2315c35b5f53447c1a1ae85d805b154e2507d6545af54066beb5c89a40a4"
+    },
+    "assets/app-home.png": {
+      "hash": "79ae56f3dc61989f132df4909903d3e55d032116c4195d0d08e411388479e9ea",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/79/79ae56f3dc61989f132df4909903d3e55d032116c4195d0d08e411388479e9ea"
+    },
+    "assets/app-learning.png": {
+      "hash": "67bac6efb6352ab2e05ff5d6da7803b4bc656915bb95672ec1edfbc49d11e925",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/67/67bac6efb6352ab2e05ff5d6da7803b4bc656915bb95672ec1edfbc49d11e925"
+    },
+    "assets/fonts/DM-Mono-OFL.txt": {
+      "hash": "2bada5ea45c3c63b7f1ea1f88ce9672c9e4f0c42b2c3b7378949084fe55a3066",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/2b/2bada5ea45c3c63b7f1ea1f88ce9672c9e4f0c42b2c3b7378949084fe55a3066"
+    },
+    "assets/fonts/Manrope-OFL.txt": {
+      "hash": "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/58/58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"
+    },
+    "assets/fonts/dm-mono-400.ttf": {
+      "hash": "c97fcd822f825e9e731867b650a39ee678b609bead29385e320171b573ec0910",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/c9/c97fcd822f825e9e731867b650a39ee678b609bead29385e320171b573ec0910"
+    },
+    "assets/fonts/dm-mono-500.ttf": {
+      "hash": "dd60d0861a3efd540efc3f2f85e7a7fd69a7ece7eadf44aaffa5fc5c86adda0e",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/dd/dd60d0861a3efd540efc3f2f85e7a7fd69a7ece7eadf44aaffa5fc5c86adda0e"
+    },
+    "assets/fonts/manrope-400.ttf": {
+      "hash": "ed335894f8d954263675f7e457bf657374d8b7be629be4dc43aef97c309ad3ae",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/ed/ed335894f8d954263675f7e457bf657374d8b7be629be4dc43aef97c309ad3ae"
+    },
+    "assets/fonts/manrope-500.ttf": {
+      "hash": "437dc9f921739a6893128fa4dfc299424951148475815a9a213a46457878c42b",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/43/437dc9f921739a6893128fa4dfc299424951148475815a9a213a46457878c42b"
+    },
+    "assets/fonts/manrope-600.ttf": {
+      "hash": "68ed4be49ec7d32f07b42f9232dc01ca1df7a77be1d9b0731aac74db58235f34",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/68/68ed4be49ec7d32f07b42f9232dc01ca1df7a77be1d9b0731aac74db58235f34"
+    },
+    "assets/fonts/manrope-700.ttf": {
+      "hash": "ea1f264039fed13fd36e6d6f49fcae4fe7007def02cf2972b5c7f6d6f1349d06",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/ea/ea1f264039fed13fd36e6d6f49fcae4fe7007def02cf2972b5c7f6d6f1349d06"
+    },
+    "assets/fonts/manrope-800.ttf": {
+      "hash": "a8291b05b2732801abdbbb6d06866c57431c3b990638462423e692151b5e0895",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/a8/a8291b05b2732801abdbbb6d06866c57431c3b990638462423e692151b5e0895"
+    },
+    "capture-app.mjs": {
+      "hash": "9ef3b6f8ef546b6936844dbf6592f201ad56569bb53fb3cfa0d5323b036802da",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/9e/9ef3b6f8ef546b6936844dbf6592f201ad56569bb53fb3cfa0d5323b036802da"
+    },
+    "guion-voz.md": {
+      "hash": "ef9ead732766da0840d8496fbdc1949f4478acfd61c51f30e8cfdf24773b2ee8",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/ef/ef9ead732766da0840d8496fbdc1949f4478acfd61c51f30e8cfdf24773b2ee8"
+    },
+    "index.html": {
+      "hash": "d228d5c3c24bd2d0a7511fee87dac66bcd9e2edca107e0991de6d4dbcdc62423",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/d2/d228d5c3c24bd2d0a7511fee87dac66bcd9e2edca107e0991de6d4dbcdc62423"
+    },
+    "review-frames/contact-sheet-1.jpg": {
+      "hash": "25f697aa143361c3a53a3cefa23a8f0eecfa36dde0a41d0daee9eacefb5d6a6f",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/25/25f697aa143361c3a53a3cefa23a8f0eecfa36dde0a41d0daee9eacefb5d6a6f"
+    },
+    "review-frames/contact-sheet-2.jpg": {
+      "hash": "7bbe6f9e134fc58d21ac06a86fa169a245be936e866338f212037d9c7fc18b95",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/7b/7bbe6f9e134fc58d21ac06a86fa169a245be936e866338f212037d9c7fc18b95"
+    },
+    "review-frames/frame-00-at-2s.png": {
+      "hash": "4098a85a1e9981eb001f12d761f3da75dedef9f6fc0f716b2ee21aeedb9459ed",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/40/4098a85a1e9981eb001f12d761f3da75dedef9f6fc0f716b2ee21aeedb9459ed"
+    },
+    "review-frames/frame-01-at-18s.png": {
+      "hash": "11f44362bd2974a98880992c94b280fb02883bfc18abfdeee722d42e0e04394d",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/11/11f44362bd2974a98880992c94b280fb02883bfc18abfdeee722d42e0e04394d"
+    },
+    "review-frames/frame-02-at-36s.png": {
+      "hash": "f4db48b495e2fa80756010b88ee84c9bfccd93693ee68ededa920ac812fb2aaf",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/f4/f4db48b495e2fa80756010b88ee84c9bfccd93693ee68ededa920ac812fb2aaf"
+    },
+    "review-frames/frame-03-at-56s.png": {
+      "hash": "5c9e705daee5c27cc1327b843f6da42ea11da30c4812aae0b92f2a845f60fce6",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/5c/5c9e705daee5c27cc1327b843f6da42ea11da30c4812aae0b92f2a845f60fce6"
+    },
+    "review-frames/frame-04-at-73s.png": {
+      "hash": "6c11517c7be2702e1fe128e50ae13329e1e6b3c18cc7340a018fc18434e6940e",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/6c/6c11517c7be2702e1fe128e50ae13329e1e6b3c18cc7340a018fc18434e6940e"
+    },
+    "review-frames/frame-05-at-93s.png": {
+      "hash": "3c4f8b83812d9d7ccd9bc98e311301a831b676c65be9820bca11b0cbaf510627",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/3c/3c4f8b83812d9d7ccd9bc98e311301a831b676c65be9820bca11b0cbaf510627"
+    },
+    "review-frames/frame-06-at-115s.png": {
+      "hash": "1fcd1d4fcd6d2bd3801d81d05522782ed883ab83d5322d0384ea910a7ccf96a5",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/1f/1fcd1d4fcd6d2bd3801d81d05522782ed883ab83d5322d0384ea910a7ccf96a5"
+    },
+    "review-frames/frame-07-at-135s.png": {
+      "hash": "63d6195b90937b5dce202b82e775ae4ed6c1064964ec662b296d409bd01d2616",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/63/63d6195b90937b5dce202b82e775ae4ed6c1064964ec662b296d409bd01d2616"
+    },
+    "review-frames/frame-08-at-149s.png": {
+      "hash": "63d6195b90937b5dce202b82e775ae4ed6c1064964ec662b296d409bd01d2616",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/63/63d6195b90937b5dce202b82e775ae4ed6c1064964ec662b296d409bd01d2616"
+    },
+    "review-frames/frame-09-at-149.75s.png": {
+      "hash": "3c4d6cd0b422155b94f9fa6e351eb19ac01f017f40ad8641a10cae45aa61ec0f",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/3c/3c4d6cd0b422155b94f9fa6e351eb19ac01f017f40ad8641a10cae45aa61ec0f"
+    },
+    "README.md": {
+      "hash": "eb21fa699516691a7a4e8d1541af2e1bd897f8fe92c1e560d15332b1c488e8fa",
+      "content": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/eb/eb21fa699516691a7a4e8d1541af2e1bd897f8fe92c1e560d15332b1c488e8fa"
+    }
+  },
+  "revisions": {
+    "ae0dbe2d-68a1-4f9c-870b-e96969b65509": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1793884992700,
+      "endedAt": 1793884992743,
+      "files": {
+        "index.html": {
+          "before": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/d2/d2e2d1e4309a6fea46d50990e0eff37ed0163ce4ce45171cc4441e1b3631a4da",
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/42/4270d3ec0656e2757eb3d130a9b763499d9b0f761cf582d9a9483150889b0434"
+        },
+        "review-frames/contact-sheet-1.jpg": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/25/25f697aa143361c3a53a3cefa23a8f0eecfa36dde0a41d0daee9eacefb5d6a6f"
+        },
+        "review-frames/contact-sheet-2.jpg": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/7b/7bbe6f9e134fc58d21ac06a86fa169a245be936e866338f212037d9c7fc18b95"
+        },
+        "review-frames/frame-00-at-2s.png": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/40/4098a85a1e9981eb001f12d761f3da75dedef9f6fc0f716b2ee21aeedb9459ed"
+        },
+        "review-frames/frame-01-at-18s.png": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/11/11f44362bd2974a98880992c94b280fb02883bfc18abfdeee722d42e0e04394d"
+        },
+        "review-frames/frame-02-at-36s.png": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/f4/f4db48b495e2fa80756010b88ee84c9bfccd93693ee68ededa920ac812fb2aaf"
+        },
+        "review-frames/frame-03-at-56s.png": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/5c/5c9e705daee5c27cc1327b843f6da42ea11da30c4812aae0b92f2a845f60fce6"
+        },
+        "review-frames/frame-04-at-73s.png": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/6c/6c11517c7be2702e1fe128e50ae13329e1e6b3c18cc7340a018fc18434e6940e"
+        },
+        "review-frames/frame-05-at-93s.png": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/3c/3c4f8b83812d9d7ccd9bc98e311301a831b676c65be9820bca11b0cbaf510627"
+        },
+        "review-frames/frame-06-at-115s.png": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/1f/1fcd1d4fcd6d2bd3801d81d05522782ed883ab83d5322d0384ea910a7ccf96a5"
+        },
+        "review-frames/frame-07-at-135s.png": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/63/63d6195b90937b5dce202b82e775ae4ed6c1064964ec662b296d409bd01d2616"
+        },
+        "review-frames/frame-08-at-149s.png": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/63/63d6195b90937b5dce202b82e775ae4ed6c1064964ec662b296d409bd01d2616"
+        },
+        "review-frames/frame-09-at-149.75s.png": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/3c/3c4d6cd0b422155b94f9fa6e351eb19ac01f017f40ad8641a10cae45aa61ec0f"
+        }
+      }
+    },
+    "3bd78477-681e-4463-805b-333dbcdf28d9": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1793885171233,
+      "endedAt": 1793885171242,
+      "files": {
+        "index.html": {
+          "before": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/42/4270d3ec0656e2757eb3d130a9b763499d9b0f761cf582d9a9483150889b0434",
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/d2/d228d5c3c24bd2d0a7511fee87dac66bcd9e2edca107e0991de6d4dbcdc62423"
+        },
+        "README.md": {
+          "before": null,
+          "after": "/Users/agustinmaretto/.cache/hyperframes/history/894acec1-6234-45ea-8815-c500ee09d412/blobs/eb/eb21fa699516691a7a4e8d1541af2e1bd897f8fe92c1e560d15332b1c488e8fa"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": {
+      "revision": null,
+      "id": "6aaa0312-6814-4642-bbf7-d9465661f019-9"
+    },
+    "revisions": {},
+    "unversioned": [
+      {
+        "scope": "full",
+        "id": "6aaa0312-6814-4642-bbf7-d9465661f019-0",
+        "image": "/Users/agustinmaretto/PhishNet/video/review-frames/frame-00-at-2s.png",
+        "time": 2,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793884563366,
+        "contentHash": "4098a85a1e9981eb001f12d761f3da75dedef9f6fc0f716b2ee21aeedb9459ed",
+        "revision": null,
+        "inputFingerprint": "f0ae1a9130c9ad1563d8af951fb33199e94a6db9f67187767a780bc44e508206",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "6aaa0312-6814-4642-bbf7-d9465661f019-1",
+        "image": "/Users/agustinmaretto/PhishNet/video/review-frames/frame-01-at-18s.png",
+        "time": 18,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793884563366,
+        "contentHash": "11f44362bd2974a98880992c94b280fb02883bfc18abfdeee722d42e0e04394d",
+        "revision": null,
+        "inputFingerprint": "f0ae1a9130c9ad1563d8af951fb33199e94a6db9f67187767a780bc44e508206",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "6aaa0312-6814-4642-bbf7-d9465661f019-2",
+        "image": "/Users/agustinmaretto/PhishNet/video/review-frames/frame-02-at-36s.png",
+        "time": 36,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793884563366,
+        "contentHash": "f4db48b495e2fa80756010b88ee84c9bfccd93693ee68ededa920ac812fb2aaf",
+        "revision": null,
+        "inputFingerprint": "f0ae1a9130c9ad1563d8af951fb33199e94a6db9f67187767a780bc44e508206",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "6aaa0312-6814-4642-bbf7-d9465661f019-3",
+        "image": "/Users/agustinmaretto/PhishNet/video/review-frames/frame-03-at-56s.png",
+        "time": 56,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793884563366,
+        "contentHash": "5c9e705daee5c27cc1327b843f6da42ea11da30c4812aae0b92f2a845f60fce6",
+        "revision": null,
+        "inputFingerprint": "f0ae1a9130c9ad1563d8af951fb33199e94a6db9f67187767a780bc44e508206",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "6aaa0312-6814-4642-bbf7-d9465661f019-4",
+        "image": "/Users/agustinmaretto/PhishNet/video/review-frames/frame-04-at-73s.png",
+        "time": 73,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793884563366,
+        "contentHash": "6c11517c7be2702e1fe128e50ae13329e1e6b3c18cc7340a018fc18434e6940e",
+        "revision": null,
+        "inputFingerprint": "f0ae1a9130c9ad1563d8af951fb33199e94a6db9f67187767a780bc44e508206",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "6aaa0312-6814-4642-bbf7-d9465661f019-5",
+        "image": "/Users/agustinmaretto/PhishNet/video/review-frames/frame-05-at-93s.png",
+        "time": 93,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793884563366,
+        "contentHash": "3c4f8b83812d9d7ccd9bc98e311301a831b676c65be9820bca11b0cbaf510627",
+        "revision": null,
+        "inputFingerprint": "f0ae1a9130c9ad1563d8af951fb33199e94a6db9f67187767a780bc44e508206",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "6aaa0312-6814-4642-bbf7-d9465661f019-6",
+        "image": "/Users/agustinmaretto/PhishNet/video/review-frames/frame-06-at-115s.png",
+        "time": 115,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793884563366,
+        "contentHash": "1fcd1d4fcd6d2bd3801d81d05522782ed883ab83d5322d0384ea910a7ccf96a5",
+        "revision": null,
+        "inputFingerprint": "f0ae1a9130c9ad1563d8af951fb33199e94a6db9f67187767a780bc44e508206",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "6aaa0312-6814-4642-bbf7-d9465661f019-7",
+        "image": "/Users/agustinmaretto/PhishNet/video/review-frames/frame-07-at-135s.png",
+        "time": 135,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793884563366,
+        "contentHash": "63d6195b90937b5dce202b82e775ae4ed6c1064964ec662b296d409bd01d2616",
+        "revision": null,
+        "inputFingerprint": "f0ae1a9130c9ad1563d8af951fb33199e94a6db9f67187767a780bc44e508206",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "6aaa0312-6814-4642-bbf7-d9465661f019-8",
+        "image": "/Users/agustinmaretto/PhishNet/video/review-frames/frame-08-at-149s.png",
+        "time": 149,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793884563366,
+        "contentHash": "63d6195b90937b5dce202b82e775ae4ed6c1064964ec662b296d409bd01d2616",
+        "revision": null,
+        "inputFingerprint": "f0ae1a9130c9ad1563d8af951fb33199e94a6db9f67187767a780bc44e508206",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "6aaa0312-6814-4642-bbf7-d9465661f019-9",
+        "image": "/Users/agustinmaretto/PhishNet/video/review-frames/frame-09-at-149.75s.png",
+        "time": 149.75,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793884563366,
+        "contentHash": "3c4d6cd0b422155b94f9fa6e351eb19ac01f017f40ad8641a10cae45aa61ec0f",
+        "revision": null,
+        "inputFingerprint": "f0ae1a9130c9ad1563d8af951fb33199e94a6db9f67187767a780bc44e508206",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      }
+    ]
+  },
+  "renders": {
+    "latest": {
+      "id": "7b763264-f0e4-46b6-ab55-e81d52128cf1",
+      "completedAt": 1793885295732,
+      "output": "/Users/agustinmaretto/PhishNet/video/renders/phishnet-problematica.mp4",
+      "status": "completed",
+      "revision": "3bd78477-681e-4463-805b-333dbcdf28d9"
+    },
+    "retainedRevisions": [
+      "3bd78477-681e-4463-805b-333dbcdf28d9"
+    ]
+  },
+  "pendingArtifactCleanup": []
+}
