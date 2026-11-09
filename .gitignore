@@ -13,3 +13,6 @@ vite.config.d.ts
 .vscode/
 .chrome-qa-profile*/
 .edge-qa-profile/
+video/.hyperframes/
+video/review-frames/
+video/renders/phishnet-silent-intermediate.mp4

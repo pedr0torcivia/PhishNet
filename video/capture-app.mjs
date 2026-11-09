@@ -37,19 +37,4 @@ const browser = await chromium.launch({
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 })
 await page.goto('http://127.0.0.1:5173/#inicio', { waitUntil: 'networkidle' })
 await page.screenshot({ path: path.join(output, 'app-home.png') })
-
-await page.setViewportSize({ width: 1440, height: 1100 })
-await page.goto('http://127.0.0.1:5173/#analizar', { waitUntil: 'networkidle' })
-await page.getByRole('button', { name: 'Caso 1' }).click()
-await page.screenshot({ path: path.join(output, 'app-analysis-input.png') })
-await page.getByRole('button', { name: 'Analizar contenido' }).click()
-await page.locator('.risk-alto').waitFor({ state: 'visible' })
-await page.screenshot({ path: path.join(output, 'app-analysis-result.png') })
-await page.locator('.recommendations').scrollIntoViewIfNeeded()
-await page.screenshot({ path: path.join(output, 'app-analysis-guidance.png') })
-
-await page.setViewportSize({ width: 1440, height: 900 })
-await page.goto('http://127.0.0.1:5173/#aprender', { waitUntil: 'networkidle' })
-await page.screenshot({ path: path.join(output, 'app-learning.png') })
-
 await browser.close()
