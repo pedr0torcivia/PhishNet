@@ -20,7 +20,7 @@ Composición Hyperframes (HTML + CSS + GSAP) que evoluciona el video v1 de 104 s
 | 1:09–1:15 | `scene5` | Solución: Conocé PhishNet | Equipo |
 | 1:15–1:34.5 | `scene6` | Demo real: portada → analizador → tipeo → clic → resultado | Guía |
 | 1:34.5–1:46 | `scene7` | Resultado real 52/100 encuadrado en la grabación | Guía |
-| 1:46–2:00 | `scene8` | Cierre, logo, frase y QR (visible 1:49.4–2:00) | Equipo |
+| 1:46–2:00 | `scene8` | Cierre, frase y QR (visible 1:49.4–1:58); placa final con el logo en grande 1:58–2:00 | Equipo |
 
 `scene3` sigue en el archivo como escena de respaldo, sin programar: su idea quedó resumida en el rótulo de `scene2` para ganar tiempo para la demo.
 
@@ -43,7 +43,7 @@ Composición Hyperframes (HTML + CSS + GSAP) que evoluciona el video v1 de 104 s
 | `assets/voice-guia/*.wav` | Pista guía sintética (Kokoro, local) de las frases nuevas: reemplazar por grabaciones del equipo. |
 | `assets/music-original.mp3` | Música original. |
 | `assets/qr-phishnet.svg` | QR a https://pedr0torcivia.github.io/PhishNet/ (corrección M, zona de silencio de 4 módulos). |
-| `assets/phishnet-mark.svg` | Isotipo real de PhishNet (copia de `design/logo/`); reemplaza el ícono dibujado en CSS de la v1. |
+| `assets/phishnet-mark.svg`, `phishnet-mark-dark.svg` | Isotipo real de PhishNet (copia de `design/logo/`) y su versión para fondo oscuro (placa final). |
 | `render.ps1` | Chequeo + render final con Hyperframes. |
 | `capture-app.mjs`, `capture-mail-flow.mjs`, `assets/app-*.png` | Capturas de la v1 (la portada sigue usándose en `scene5`). |
 
