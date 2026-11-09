@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Un segundo antes del clic — PhishNet</title>
+    <title>PhishNet — Detectá el engaño antes de caer (v2, 120 s)</title>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <style>
       @font-face { font-family: Manrope; font-style: normal; font-weight: 400; src: url("assets/fonts/manrope-400.ttf") format("truetype"); }
@@ -30,21 +30,23 @@
       body { color: var(--ink); background: var(--paper); font-family: var(--sans); }
       #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); }
       .scene { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; padding: 0; }
+      /* Orden de apilado = orden de aparición (v2, 120 s). scene3 queda como respaldo sin programar. */
       #scene1 { z-index: 1; opacity: 1; background: var(--paper); }
       #scene2 { z-index: 2; opacity: 0; background: var(--paper); }
-      #scene3 { z-index: 3; opacity: 0; background: var(--white); }
+      #scene3 { z-index: 0; opacity: 0; background: var(--white); }
       #scene4 { z-index: 4; opacity: 0; background: var(--ink); color: var(--white); }
-      #scene5 { z-index: 5; opacity: 0; background: var(--paper); }
-      #scene6 { z-index: 6; opacity: 0; background: var(--paper); }
-      #scene7 { z-index: 7; opacity: 0; background: var(--ink); color: var(--white); }
-      #scene8 { z-index: 8; opacity: 0; background: var(--mint); }
+      #scene9 { z-index: 5; opacity: 0; background: var(--paper); }
+      #scene10 { z-index: 6; opacity: 0; background: var(--white); }
+      #scene5 { z-index: 7; opacity: 0; background: var(--paper); }
+      #scene6 { z-index: 8; opacity: 0; background: var(--paper); }
+      #scene7 { z-index: 9; opacity: 0; background: var(--ink); color: var(--white); }
+      #scene8 { z-index: 10; opacity: 0; background: var(--mint); }
       .scene-content { display: flex; flex-direction: column; width: 100%; height: 100%; padding: 96px 120px; gap: 28px; box-sizing: border-box; }
       .row { display: flex; flex-direction: row; align-items: center; gap: 72px; }
       .split { display: grid; grid-template-columns: 0.95fr 1.05fr; align-items: center; gap: 76px; }
       .brand { display: flex; align-items: center; gap: 16px; font-size: 26px; font-weight: 800; letter-spacing: -.05em; }
       .brand span { color: var(--teal); }
-      .mark { width: 44px; height: 44px; border: 3px solid var(--teal); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); position: relative; }
-      .mark:after { content: ''; position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--orange); right: 4px; top: 4px; }
+      .mark { width: 48px; height: 48px; display: block; }
       .eyebrow { font: 500 20px var(--mono); letter-spacing: .16em; color: var(--ink); text-transform: uppercase; margin: 0 0 22px; }
       .eyebrow.light { color: var(--mint); }
       h1, h2, p { margin-top: 0; }
@@ -128,7 +130,7 @@
       .halo.dark { border-color: rgba(135,243,197,.32); box-shadow: 0 0 0 56px rgba(135,243,197,.08),0 0 0 112px rgba(135,243,197,.04); }
       .caption-bar { position: absolute; left: 120px; right: 120px; bottom: 64px; display: flex; gap: 18px; align-items: center; background: var(--white); color: var(--ink); border: 2px solid var(--ink); padding: 16px 22px; font-size: 23px; line-height: 1.3; box-shadow: 8px 8px 0 rgba(13,128,111,.23); }
       .s3-caption { bottom: 170px; }
-      .s7-caption { bottom: 170px; }
+      .s7-caption { bottom: 150px; right: auto; width: 740px; }
       .caption-bar .dot { flex: 0 0 12px; }
       .screenshot-frame { width: 100%; max-width: 1030px; overflow: hidden; border: 3px solid var(--white); background: var(--white); box-shadow: 20px 20px 0 rgba(135,243,197,.82); }
       .s7-screen { margin-bottom: 110px; }
@@ -142,15 +144,84 @@
       .motion-glyph .symbol { fill: none; stroke: currentColor; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
       .motion-glyph .orbit { fill: none; stroke: currentColor; stroke-width: 2; stroke-dasharray: 8 12; opacity: .8; transform-origin: 50px 50px; }
       .motion-glyph .pulse { fill: currentColor; opacity: .9; }
+      .s2-caption { bottom: 150px; }
+
+      /* v2 — Abundancia */
+      .abund { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; margin-top: 30px; }
+      .abund article { border-top: 4px solid var(--ink); padding: 24px 10px 0 0; min-height: 360px; display: flex; flex-direction: column; gap: 14px; }
+      .abund article.next { border-top-style: dashed; border-color: rgba(7,26,31,.55); }
+      .abund strong { font: 500 18px var(--mono); color: var(--teal); letter-spacing: .06em; }
+      .abund h3 { margin: 0; font-size: 38px; line-height: 1.1; letter-spacing: -.035em; }
+      .abund p { margin: 0; font-size: 25px; line-height: 1.32; color: #354648; }
+      .tag { align-self: flex-start; margin-top: auto; padding: 10px 14px; font: 500 17px var(--mono); letter-spacing: .08em; border: 2px solid var(--ink); }
+      .tag.now { background: var(--mint); }
+      .tag.later { background: transparent; border-style: dashed; color: var(--muted); }
+
+      /* v2 — Mercado */
+      .market { display: grid; grid-template-columns: 1fr 110px 1.15fr; align-items: stretch; gap: 26px; margin-top: 30px; }
+      .alt-list { display: grid; gap: 14px; align-content: start; }
+      .alt-list .label { font-size: 22px; padding: 16px 20px; background: var(--paper); }
+      .alt-note { font-size: 24px; color: #354648; margin: 10px 0 0; }
+      .market-arrow { align-self: center; width: 110px; height: 60px; color: var(--teal); }
+      .pn-card { background: var(--ink); color: var(--white); padding: 34px 38px; box-shadow: 20px 20px 0 var(--mint); }
+      .pn-card .brand { color: var(--white); font-size: 30px; margin-bottom: 14px; }
+      .pn-card .brand span { color: var(--mint); }
+      .pn-card p { font-size: 27px; line-height: 1.3; margin: 0 0 22px; color: #d4dfda; }
+      .pn-card p b { color: var(--white); }
+      .segments { display: flex; flex-wrap: wrap; gap: 12px; }
+      .segments span { border: 2px solid var(--mint); padding: 11px 15px; font: 500 17px var(--mono); color: var(--mint); letter-spacing: .03em; }
+      .segments span.exp { border-style: dashed; color: #d4dfda; border-color: rgba(255,253,247,.55); }
+      .hypo { position: absolute; left: 120px; bottom: 150px; }
+
+      /* v2 — Demo real grabada */
+      .s6-shot { position: relative; height: 746px; overflow: hidden; }
+      .s6-viewport { position: absolute; top: 46px; left: 0; width: 1120px; height: 700px; overflow: hidden; }
+      .s6-cam { position: absolute; inset: 0; transform-origin: 313px 436px; }
+      .s6-cam video { position: absolute; left: 0; top: 0; width: 1120px; height: 700px; }
+      .click-ring { position: absolute; left: 95px; top: 699px; width: 438px; height: 54px; border: 4px solid var(--orange); box-shadow: 0 0 0 10px rgba(255,107,61,.18); opacity: 0; }
+      .rec-badge { position: absolute; top: 9px; right: 16px; display: flex; align-items: center; gap: 9px; font: 500 14px var(--mono); letter-spacing: .1em; color: var(--ink); }
+      .rec-badge i { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
+      .s7-frame { position: relative; width: 860px; height: 766px; overflow: hidden; border: 3px solid var(--white); background: var(--white); box-shadow: 20px 20px 0 rgba(135,243,197,.82); margin-bottom: 110px; }
+      .s7-frame video { position: absolute; left: -1044px; top: -511px; width: 2045px; height: 1278px; }
+
+      /* v2 — Cierre con QR */
+      .s8-grid { display: grid; grid-template-columns: 1fr 520px; align-items: center; gap: 70px; height: 100%; }
+      #scene8 .closing { font-size: 84px; }
+      .tagline { font-size: 38px; line-height: 1.2; font-weight: 800; letter-spacing: -.04em; margin: 26px 0 0; }
+      .tagline em { font-style: normal; color: var(--teal); }
+      .qr-card { background: var(--white); border: 3px solid var(--ink); box-shadow: 20px 20px 0 var(--ink); padding: 34px 34px 28px; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+      .qr-card img { width: 440px; height: 440px; display: block; image-rendering: pixelated; }
+      .qr-card b { font-size: 32px; letter-spacing: -.03em; }
+      .qr-card span { font: 500 17px var(--mono); color: var(--muted); }
+      .end-card { position: absolute; inset: 0; z-index: 20; background: var(--ink); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; opacity: 0; }
+      .end-mark { width: 360px; height: 360px; display: block; }
+      .end-word { font-size: 150px; font-weight: 800; letter-spacing: -.06em; line-height: 1; color: var(--white); }
+      .end-word span { color: var(--mint); }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="phishnet" data-width="1920" data-height="1080" data-fps="30" data-start="0" data-duration="104">
+    <div id="root" data-composition-id="phishnet" data-width="1920" data-height="1080" data-fps="30" data-start="0" data-duration="120">
+      <!-- Audio: la mezcla vive en la composición (antes se hacía con mix-audio.ps1).
+           voice-original.mp3 = voces humanas del equipo; assets/voice-guia/*.wav = pista guía sintética (Kokoro)
+           para las frases nuevas: reemplazar por grabaciones del equipo con el mismo nombre de archivo. -->
+      <audio id="music" class="clip" data-start="0" data-duration="120" data-track-index="20" src="assets/music-original.mp3" data-volume="0.063" data-fade-in="1" data-fade-out="2.5"></audio>
+      <audio id="vo-p1-problema" class="clip" data-start="0" data-duration="23.65" data-media-start="0" data-track-index="21" src="assets/voice-original.mp3" data-volume="1.98" data-fade-out="0.12"></audio>
+      <audio id="vo-p2-ptm" class="clip" data-start="24.2" data-duration="13.2" data-media-start="33.76" data-track-index="22" src="assets/voice-original.mp3" data-volume="0.63" data-fade-in="0.05" data-fade-out="0.15"></audio>
+      <audio id="vo-g01-abundancia" class="clip" data-start="38.3" data-duration="14.45" data-track-index="23" src="assets/voice-guia/g01-abundancia.wav" data-volume="1.29"></audio>
+      <audio id="vo-g02-mercado" class="clip" data-start="53.2" data-duration="15.58" data-track-index="23" src="assets/voice-guia/g02-mercado.wav" data-volume="1.29"></audio>
+      <audio id="vo-p3-producto" class="clip" data-start="69.4" data-duration="4.46" data-media-start="46.96" data-track-index="21" src="assets/voice-original.mp3" data-volume="2.13" data-fade-in="0.05" data-fade-out="0.1"></audio>
+      <audio id="vo-g03-demo-intro" class="clip" data-start="75.6" data-duration="2.37" data-track-index="23" src="assets/voice-guia/g03-demo-intro.wav" data-volume="1.29"></audio>
+      <audio id="vo-g04-demo-mensaje" class="clip" data-start="81.4" data-duration="6.45" data-track-index="23" src="assets/voice-guia/g04-demo-mensaje.wav" data-volume="1.29"></audio>
+      <audio id="vo-g05-demo-analizar" class="clip" data-start="88.4" data-duration="3.78" data-track-index="23" src="assets/voice-guia/g05-demo-analizar.wav" data-volume="1.29"></audio>
+      <audio id="vo-g06-demo-resultado" class="clip" data-start="95.2" data-duration="4.95" data-track-index="23" src="assets/voice-guia/g06-demo-resultado.wav" data-volume="1.29"></audio>
+      <audio id="vo-g07-demo-consejos" class="clip" data-start="100.6" data-duration="4.67" data-track-index="23" src="assets/voice-guia/g07-demo-consejos.wav" data-volume="1.29"></audio>
+      <audio id="vo-p4-cierre" class="clip" data-start="106.3" data-duration="13.45" data-media-start="85.6" data-track-index="22" src="assets/voice-original.mp3" data-volume="0.62" data-fade-in="0.05" data-fade-out="0.2"></audio>
+
       <section id="scene1" class="scene">
         <div class="grain"></div><div class="gridwash"></div><div class="ghost" data-ghost="PAUSA" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
         <div class="scene-content split">
           <div class="scene1-title">
-            <div class="brand s1-brand"><div class="mark"></div><div>PHISH<span>NET</span></div></div>
+            <div class="brand s1-brand"><img class="mark" src="assets/phishnet-mark.svg" alt="" /><div>PHISH<span>NET</span></div></div>
             <p class="eyebrow s1-kicker">Una situación cotidiana</p>
             <h1 class="s1-head">Un mensaje.<br>Una urgencia.<br><span class="accent">Un clic.</span></h1>
             <p class="body-copy s1-copy">¿Qué harías si te apuraran a verificar tu cuenta?</p>
@@ -187,9 +258,11 @@
           </div>
         </div>
         <div class="cursor s2-cursor"></div>
+        <div class="caption-bar s2-caption"><i class="dot"></i>Reconocer estas señales lleva tiempo, y muchas personas no saben qué mirar.</div>
         <div class="safe-band"><span>EL TIEMPO PARA VERIFICAR SE REDUCE</span><span>02 — HACER UNA PAUSA</span></div>
       </section>
 
+      <!-- Escena de respaldo de la v1: no está programada en el corte de 120 s (su idea se resume en el rótulo de scene2). -->
       <section id="scene3" class="scene">
         <div class="grain"></div><div class="gridwash"></div><div class="ghost" data-ghost="SEÑALES" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
         <div class="scene-content">
@@ -212,9 +285,56 @@
           <div class="rule mint s4-rule"></div>
           <p class="purpose s4-purpose">Hacer que la seguridad digital sea <em>accesible para todos.</em></p>
           <p class="body-copy light-copy s4-copy">PhishNet ayuda a comprender antes de decidir. No decide por las personas.</p>
-          <div class="safe-band dark"><span>PHISHNET / PROPÓSITO</span><span>04 — TECNOLOGÍA AL SERVICIO DE LAS PERSONAS</span></div>
+          <div class="safe-band dark"><span>PHISHNET / PTM</span><span>03 — TECNOLOGÍA AL SERVICIO DE LAS PERSONAS</span></div>
         </div>
         <div class="dot s4-dot" style="position:absolute;left:1170px;bottom:190px"></div>
+      </section>
+
+      <section id="scene9" class="scene">
+        <div class="grain"></div><div class="gridwash"></div><div class="halo" data-layout-allow-overflow aria-hidden="true"></div><div class="ghost" data-ghost="+" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
+        <div class="scene-content">
+          <p class="eyebrow s9-kicker">Abundancia</p>
+          <h2 class="s9-head">Los recursos para lograrlo<br><span class="accent">ya abundan.</span></h2>
+          <div class="rule s9-rule"></div>
+          <div class="abund">
+            <article class="s9-a"><strong>01 / CÓDIGO ABIERTO</strong><h3>Herramientas libres</h3><p>React y Tesseract.js: el OCR lee capturas en el navegador.</p><span class="tag now">EN USO HOY</span></article>
+            <article class="s9-b"><strong>02 / NUBE</strong><h3>Infraestructura accesible</h3><p>Publicada en GitHub Pages, sin servidores propios ni costo.</p><span class="tag now">EN USO HOY</span></article>
+            <article class="s9-c next"><strong>03 / IA</strong><h3>Modelos de lenguaje</h3><p>Explicaciones más ricas y adaptadas a cada caso.</p><span class="tag later">PRÓXIMO PASO</span></article>
+            <article class="s9-d next"><strong>04 / REPUTACIÓN</strong><h3>APIs y bases de amenazas</h3><p>Verificar dominios contra fuentes externas.</p><span class="tag later">PRÓXIMO PASO</span></article>
+            <article class="s9-e next"><strong>05 / COMUNIDAD</strong><h3>Datos públicos</h3><p>Patrones que comparten las comunidades de ciberseguridad.</p><span class="tag later">PRÓXIMO PASO</span></article>
+          </div>
+        </div>
+        <div class="safe-band"><span>HOY: CÓDIGO ABIERTO + NUBE · LO DEMÁS ES HOJA DE RUTA</span><span>04 — ABUNDANCIA</span></div>
+      </section>
+
+      <section id="scene10" class="scene">
+        <div class="grain"></div><div class="gridwash"></div><div class="ghost" data-ghost="MERCADO" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
+        <div class="scene-content">
+          <p class="eyebrow s10-kicker">Mercado existente resegmentado</p>
+          <h2 class="s10-head">Mismo mercado.<br><span class="accent">Otra puerta de entrada.</span></h2>
+          <div class="market">
+            <div class="alt-list">
+              <p class="tiny s10-alt-k" style="margin:0">ALTERNATIVAS ACTUALES</p>
+              <span class="label s10-alt-1">Google Safe Browsing</span>
+              <span class="label s10-alt-2">VirusTotal</span>
+              <span class="label s10-alt-3">Microsoft Defender</span>
+              <p class="alt-note s10-alt-note">Potentes, con un enfoque técnico.</p>
+            </div>
+            <svg class="market-arrow s10-arrow" viewBox="0 0 110 60" fill="none" aria-hidden="true"><path d="M6 30h92M74 8l24 22-24 22" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="pn-card s10-card">
+              <div class="brand"><div>PHISH<span>NET</span></div></div>
+              <p>Una experiencia <b>simple y educativa</b> para quien no sabe de ciberseguridad.</p>
+              <div class="segments">
+                <span class="s10-seg-1">Banca digital</span>
+                <span class="s10-seg-2">Compras y mensajería</span>
+                <span class="s10-seg-3">Sin formación técnica</span>
+                <span class="exp s10-seg-4">PyMEs · expansión</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="callout hypo s10-hypo">VENTAJA COMPETITIVA <strong>→</strong> HIPÓTESIS A VALIDAR</div>
+        <div class="safe-band"><span>PHISHNET / MERCADO</span><span>05 — RESEGMENTAR</span></div>
       </section>
 
       <section id="scene5" class="scene">
@@ -232,58 +352,83 @@
             <img src="assets/app-home.png" alt="Portada real de PhishNet" />
           </div>
         </div>
-        <div class="safe-band"><span>PHISHNET / VISTA REAL DE LA APLICACIÓN</span><span>05 — PRODUCTO</span></div>
+        <div class="safe-band"><span>PHISHNET / VISTA REAL DE LA APLICACIÓN</span><span>06 — SOLUCIÓN</span></div>
       </section>
 
       <section id="scene6" class="scene">
         <div class="grain"></div><div class="gridwash"></div><div class="halo" data-layout-allow-overflow aria-hidden="true"></div><div class="ghost" data-ghost="ANALIZAR" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
         <div class="scene-content row">
           <div class="s6-copy" style="width:480px;flex:0 0 480px">
-            <p class="eyebrow s6-kicker">Recorrido funcional</p>
-            <h2 class="s6-head">Adjuntá.<br>Analizá.<br><span class="accent">Entendé.</span></h2>
-            <div class="choice-box s6-steps"><span><b>01</b>Adjuntá una captura del correo.</span><span><b>02</b>Dejá que PhishNet lea el texto.</span><span><b>03</b>Revisá señales y recomendaciones.</span></div>
-            <div class="label-stack s6-labels"><span class="label mint">Captura de correo</span><span class="label">Análisis en pasos</span></div>
+            <p class="eyebrow s6-kicker">Demo real · app publicada</p>
+            <h2 class="s6-head">Pegá.<br>Analizá.<br><span class="accent">Entendé.</span></h2>
+            <div class="choice-box s6-steps"><span><b>01</b>Pegá el mensaje que te genera dudas.</span><span><b>02</b>PhishNet lo analiza en el navegador.</span><span><b>03</b>Revisá señales y recomendaciones.</span></div>
+            <div class="label-stack s6-labels"><span class="label mint">Grabación real</span><span class="label">Sin abrir el enlace</span></div>
           </div>
           <div class="browser-window s6-shot" style="width:1120px;flex:0 0 1120px">
-            <div class="browser-bar"><i></i><i></i><i></i><span>phishnet · analizador</span></div>
-            <img class="s6-frame s6-frame-1" src="assets/app-mail-select.png" alt="Analizador listo para adjuntar una captura" />
-            <img class="s6-frame s6-frame-2" src="assets/app-mail-attached.png" alt="Captura del correo adjuntada en PhishNet" />
-            <img class="s6-frame s6-frame-3" src="assets/app-mail-result.png" alt="Resultado del análisis de la captura" />
+            <div class="browser-bar"><i></i><i></i><i></i><span>pedr0torcivia.github.io/PhishNet</span></div>
+            <div class="rec-badge"><i></i>GRABACIÓN REAL</div>
+            <div class="s6-viewport">
+              <div class="s6-cam">
+                <video id="demo-a" class="clip" data-start="75" data-duration="19.5" data-media-start="1" data-track-index="10" src="assets/demo/demo-raw.webm" muted playsinline></video>
+                <div class="click-ring s6-ring"></div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="safe-band"><span>DEL CORREO A LAS SEÑALES</span><span>06 — ANALIZAR</span></div>
+        <div class="safe-band"><span>MENSAJE FICTICIO · DOMINIO DE PRUEBA EXAMPLE.COM</span><span>07 — DEMO</span></div>
       </section>
 
       <section id="scene7" class="scene">
-        <div class="grain"></div><div class="halo dark" data-layout-allow-overflow aria-hidden="true"></div><div class="ghost dark" data-ghost="88" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
+        <div class="grain"></div><div class="halo dark" data-layout-allow-overflow aria-hidden="true"></div><div class="ghost dark" data-ghost="52" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
         <div class="scene-content split">
           <div class="s7-copy">
             <p class="eyebrow light s7-kicker">Un resultado explicable</p>
             <h2 class="s7-head">Señales para<br>decidir con<br><span class="orange">contexto.</span></h2>
-            <div class="score-card s7-score"><strong>88</strong><span>/100<br>RIESGO ALTO<br>ORIENTATIVO</span></div>
-            <div class="callout s7-disclaimer">ANÁLISIS ORIENTATIVO</div>
+            <div class="score-card s7-score"><strong>52</strong><span>/100<br>RIESGO ALTO<br>ORIENTATIVO</span></div>
+            <div class="callout s7-disclaimer">SIN CONOCIMIENTOS TÉCNICOS</div>
           </div>
-          <div class="screenshot-frame s7-screen"><img src="assets/app-mail-result-tall.png" alt="Resultado real del análisis de la captura" /></div>
+          <div class="s7-frame s7-screen">
+            <video id="demo-b" class="clip" data-start="94.5" data-duration="11.5" data-media-start="17" data-playback-rate="0.55" data-track-index="11" src="assets/demo/demo-raw.webm" muted playsinline></video>
+          </div>
         </div>
-        <div class="caption-bar s7-caption"><i class="dot"></i>Señales detectadas: urgencia, credenciales, incentivo económico y dominio inusual.</div>
-        <div class="safe-band dark"><span>88/100 ES EL RESULTADO DEL EJEMPLO ACTUAL</span><span>07 — REVISAR LAS SEÑALES</span></div>
+        <div class="caption-bar s7-caption"><i class="dot"></i>Señales: presión o urgencia (+22) y solicitud de credenciales (+30). Y qué hacer ahora.</div>
+        <div class="safe-band dark"><span>52/100 ES EL RESULTADO REAL DE ESTE MENSAJE DE PRUEBA</span><span>08 — ENTENDER EL RIESGO</span></div>
       </section>
 
       <section id="scene8" class="scene">
         <div class="grain"></div><div class="gridwash"></div><div class="ghost" data-ghost="PHISHNET" aria-hidden="true"></div><div class="halo" data-layout-allow-overflow aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
         <div class="scene-content">
-          <p class="eyebrow s8-kicker">La tecnología acompaña</p>
-          <h2 class="closing s8-close">Frená.<br>Analizá.<br><em>Recién después, actuá.</em></h2>
-          <div class="brand-lockup s8-brand"><div class="mark"></div><div>PHISH<span class="accent">NET</span></div></div>
-          <div class="rule s8-rule"></div>
-          <p class="body-copy s8-purpose">Hacer que la seguridad digital sea accesible para todos.</p>
-          <div class="safe-band s8-safe-band"><span>PHISHNET · ANÁLISIS ORIENTATIVO</span><span>08 — CIERRE</span></div>
+          <div class="s8-grid">
+            <div>
+              <p class="eyebrow s8-kicker">La tecnología acompaña</p>
+              <h2 class="closing s8-close">Frená.<br>Analizá.<br><em>Recién después, actuá.</em></h2>
+              <div class="brand-lockup s8-brand"><img class="mark" src="assets/phishnet-mark.svg" alt="" /><div>PHISH<span class="accent">NET</span></div></div>
+              <p class="tagline s8-tagline">PhishNet. <em>Detectá el engaño antes de caer.</em></p>
+            </div>
+            <div class="qr-card s8-qr">
+              <img src="assets/qr-phishnet.svg" alt="Código QR hacia pedr0torcivia.github.io/PhishNet" />
+              <b>Escaneá y probá PhishNet</b>
+              <span>pedr0torcivia.github.io/PhishNet</span>
+            </div>
+          </div>
+          <div class="safe-band s8-safe-band"><span>PTM · SEGURIDAD DIGITAL ACCESIBLE PARA TODOS</span><span>09 — CIERRE</span></div>
+        </div>
+        <div class="end-card s8-end" aria-label="Logo PhishNet">
+          <img class="end-mark s8-end-mark" src="assets/phishnet-mark-dark.svg" alt="" />
+          <div class="end-word s8-end-word">PHISH<span>NET</span></div>
         </div>
       </section>
     </div>
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
+      // v2 — 120 s. Inicio de cada escena en segundos absolutos (orden de aparición).
+      // Problema 0–26 · PTM 26–38 · Abundancia 38–53 · Mercado 53–69 · Solución + demo real 69–106 · Cierre con QR 106–120.
+      const START = { 1: 0, 2: 11.6, 4: 26.1, 9: 38, 10: 53, 5: 69, 6: 75, 7: 94.5, 8: 106 };
+      const ORDER = [1, 2, 4, 9, 10, 5, 6, 7, 8];
+      const END = 120;
+      const sceneEnd = (s) => { const i = ORDER.indexOf(s); return i < ORDER.length - 1 ? START[ORDER[i + 1]] : END; };
+
       const iconPaths = {
         mail: '<rect x="29" y="36" width="42" height="29" rx="4"/><path d="m30 39 20 15 20-15"/>',
         alert: '<path d="M50 28 73 69H27Z"/><path d="M50 43v12M50 62h.1"/>',
@@ -301,15 +446,16 @@
         arrow: '<path d="M27 50h46m-16-16 16 16-16 16"/>',
         check: '<circle cx="50" cy="50" r="23"/><path d="m37 51 9 9 18-20"/>'
       };
+      // [escena, ícono, x, y, segundos desde el inicio de la escena (escalados si la escena dura < 13 s), tono]
       const glyphs = [
         [1,'mail',1690,200,3.2,''], [1,'alert',1680,500,6,'warm'], [1,'pointer',1680,785,8.5,'warm'],
         [2,'clock',1790,185,3.3,'warm'], [2,'question',1790,480,6,''], [2,'search',1790,775,8.5,''],
-        [3,'user',490,710,3.4,''], [3,'clock',1030,710,6,'warm'], [3,'search',1570,710,8.5,''],
         [4,'shield',1660,215,3.2,'light'], [4,'user',1660,495,6,'light'], [4,'spark',1660,775,8.5,'light'],
+        [9,'spark',1690,170,2.2,''], [9,'link',1690,330,5.0,'warm'],
+        [10,'user',1690,170,2.2,''], [10,'search',1690,330,5.0,''],
         [5,'search',560,790,3.3,''], [5,'shield',1730,150,6,''], [5,'check',1740,840,8.5,'warm'],
-        [6,'upload',1780,155,3.2,''], [6,'scan',1780,815,6,''], [6,'arrow',570,875,8.5,'warm'],
-        [7,'chart',790,180,3.2,'light'], [7,'search',790,755,6,'light'], [7,'shield',1720,160,8.5,'light'],
-        [8,'shield',1650,235,3.2,''], [8,'arrow',1650,515,6,''], [8,'check',1650,795,8.5,'']
+        [6,'arrow',570,875,8.5,'warm'],
+        [7,'chart',790,180,3.2,'light']
       ];
       for (const [scene, type, x, y, at, tone] of glyphs) {
         const id = `glyph-${scene}-${type}`;
@@ -320,121 +466,155 @@
         node.style.top = `${y}px`;
         node.innerHTML = `<svg viewBox="0 0 100 100" aria-hidden="true"><circle class="orbit" cx="50" cy="50" r="47"/><circle class="badge" cx="50" cy="50" r="39"/><g class="symbol">${iconPaths[type]}</g><circle class="pulse" cx="83" cy="17" r="4"/></svg>`;
         document.getElementById(`scene${scene}`).appendChild(node);
-        const start = (scene - 1) * 13 + at;
+        const start = START[scene] + at * Math.min(1, (sceneEnd(scene) - START[scene]) / 13);
         tl.fromTo(node, { opacity: 0, scale: .55, y: 14 }, { opacity: .92, scale: 1, y: 0, duration: .55, ease: 'back.out(1.7)' }, start);
         tl.fromTo(node.querySelector('.orbit'), { rotation: -75, opacity: 0 }, { rotation: 0, opacity: .8, duration: 1.5, ease: 'power2.out' }, start + .1);
         tl.fromTo(node.querySelector('.pulse'), { scale: 0, transformOrigin: 'center center' }, { scale: 1, duration: .65, ease: 'back.out(2)' }, start + 1.15);
       }
       const PACE = 0.8;
-      const sourceCuts = [0, 16.6, 33.6, 51.6, 68.6, 87.6, 110.6, 131.6, 150];
-      const targetCuts = [0, 12.6, 25.6, 38.6, 51.6, 64.6, 77.6, 90.6, 104];
-      const time = (seconds) => {
-        const segment = Math.min(sourceCuts.length - 2, sourceCuts.findIndex((cut, i) => i < sourceCuts.length - 1 && seconds < sourceCuts[i + 1]));
-        return targetCuts[segment] + (seconds - sourceCuts[segment]) * (targetCuts[segment + 1] - targetCuts[segment]) / (sourceCuts[segment + 1] - sourceCuts[segment]);
-      };
       const entrance = (target, from, to, at, duration, ease) =>
-        tl.fromTo(target, { ...from }, { ...to, duration, ease }, time(at));
+        tl.fromTo(target, { ...from }, { ...to, duration, ease }, at);
 
-      // Scene 1 — pause the incoming message.
-      entrance(".s1-brand", { x: -60, opacity: 0 }, { x: 0, opacity: 1 }, 0.2, 0.7, "power3.out");
-      entrance(".s1-kicker", { y: 30, opacity: 0 }, { y: 0, opacity: 1 }, 0.45, 0.55, "sine.out");
-      entrance(".s1-head", { x: -90, opacity: 0 }, { x: 0, opacity: 1 }, 0.65, 0.8, "expo.out");
-      entrance(".s1-copy", { y: 42, opacity: 0 }, { y: 0, opacity: 1 }, 1.05, 0.55, "power2.out");
-      entrance(".s1-rule", { scaleX: 0 }, { scaleX: 1 }, 1.35, 0.8, "power3.out");
-      entrance(".s1-device", { x: 130, y: 50, rotationY: -7, opacity: 0 }, { x: 0, y: 0, rotationY: 0, opacity: 1 }, 0.55, 0.9, "power3.out");
-      entrance(".mouse-icon", { x: 40, y: 30, opacity: 0 }, { x: 0, y: 0, opacity: 0.9 }, 3.0, 0.45, "power2.out");
-
-      // Editorial blur/push transitions; each outgoing scene stays readable until handoff.
+      // Transiciones editoriales blur/push de la v1; cada escena saliente se lee hasta el relevo.
       const trans = (oldScene, newScene, t, direction = -1) => {
-        tl.to(oldScene, { x: direction * -80, filter: "blur(12px)", opacity: 0, duration: 0.46 * PACE, ease: "power2.in" }, time(t));
-        tl.fromTo(newScene, { x: direction * 80, filter: "blur(12px)", opacity: 0 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.46 * PACE, ease: "power2.out" }, time(t) + 0.04);
+        tl.to(oldScene, { x: direction * -80, filter: "blur(12px)", opacity: 0, duration: 0.46 * PACE, ease: "power2.in" }, t);
+        tl.fromTo(newScene, { x: direction * 80, filter: "blur(12px)", opacity: 0 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.46 * PACE, ease: "power2.out" }, t + 0.04);
       };
 
-      trans("#scene1", "#scene2", 16.6, 1);
-      entrance(".s2-kicker", { y: 24, opacity: 0 }, { y: 0, opacity: 1 }, 16.95, 0.5, "sine.out");
-      entrance(".s2-head", { x: -72, opacity: 0 }, { x: 0, opacity: 1 }, 17.05, 0.72, "expo.out");
-      entrance(".s2-copy", { y: 40, opacity: 0 }, { y: 0, opacity: 1 }, 17.4, 0.55, "power2.out");
-      entrance(".s2-rule", { scaleX: 0 }, { scaleX: 1 }, 17.6, 0.55, "power3.out");
-      entrance(".s2-choices span:nth-child(1)", { x: 60, opacity: 0 }, { x: 0, opacity: 1 }, 17.15, 0.48, "power3.out");
-      entrance(".s2-choices span:nth-child(2)", { x: 90, opacity: 0 }, { x: 0, opacity: 1 }, 17.38, 0.48, "power2.out");
-      entrance(".s2-choices span:nth-child(3)", { x: 120, opacity: 0 }, { x: 0, opacity: 1 }, 17.58, 0.48, "sine.out");
-      entrance(".s2-stamp", { scale: 0.8, rotation: -4, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1 }, 18.0, 0.42, "back.out(1.7)");
-      tl.fromTo(".s2-cursor", { scale: 0.6, opacity: 0.2 }, { scale: 1, opacity: 0.75, duration: 1.3 * PACE, repeat: 5, yoyo: true, ease: "sine.inOut" }, time(17.5));
+      // 1 · PROBLEMA — el mensaje urgente.
+      entrance(".s1-brand", { x: -60, opacity: 0 }, { x: 0, opacity: 1 }, 0.15, 0.7, "power3.out");
+      entrance(".s1-kicker", { y: 30, opacity: 0 }, { y: 0, opacity: 1 }, 0.34, 0.55, "sine.out");
+      entrance(".s1-head", { x: -90, opacity: 0 }, { x: 0, opacity: 1 }, 0.49, 0.8, "expo.out");
+      entrance(".s1-copy", { y: 42, opacity: 0 }, { y: 0, opacity: 1 }, 0.8, 0.55, "power2.out");
+      entrance(".s1-rule", { scaleX: 0 }, { scaleX: 1 }, 1.02, 0.8, "power3.out");
+      entrance(".s1-device", { x: 130, y: 50, rotationY: -7, opacity: 0 }, { x: 0, y: 0, rotationY: 0, opacity: 1 }, 0.42, 0.9, "power3.out");
+      entrance(".mouse-icon", { x: 40, y: 30, opacity: 0 }, { x: 0, y: 0, opacity: 0.9 }, 2.28, 0.45, "power2.out");
 
-      trans("#scene2", "#scene3", 33.6, -1);
-      entrance(".s3-kicker", { y: 30, opacity: 0 }, { y: 0, opacity: 1 }, 33.95, 0.55, "sine.out");
-      entrance(".s3-head", { x: 70, opacity: 0 }, { x: 0, opacity: 1 }, 34.1, 0.7, "expo.out");
-      entrance(".s3-a", { y: 80, opacity: 0, rotation: -2 }, { y: 0, opacity: 1, rotation: 0 }, 34.8, 0.55, "power3.out");
-      entrance(".s3-b", { y: 100, opacity: 0, rotation: 2 }, { y: 0, opacity: 1, rotation: 0 }, 35.0, 0.6, "power2.out");
-      entrance(".s3-c", { y: 120, opacity: 0 }, { y: 0, opacity: 1 }, 35.2, 0.62, "sine.out");
-      entrance(".s3-caption", { y: 50, opacity: 0 }, { y: 0, opacity: 1 }, 36.3, 0.5, "power3.out");
-      entrance("#scene3 .ghost", { x: 80, opacity: 0 }, { x: 0, opacity: 1 }, 34.3, 0.9, "sine.out");
-      entrance("#scene3 .registration", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 0.7 }, 34.4, 0.6, "power2.out");
+      // 2 · PROBLEMA — la presión y las tres preguntas.
+      let s = START[2];
+      trans("#scene1", "#scene2", s, 1);
+      entrance(".s2-kicker", { y: 24, opacity: 0 }, { y: 0, opacity: 1 }, s + 0.27, 0.5, "sine.out");
+      entrance(".s2-head", { x: -72, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.34, 0.72, "expo.out");
+      entrance(".s2-copy", { y: 40, opacity: 0 }, { y: 0, opacity: 1 }, s + 0.61, 0.55, "power2.out");
+      entrance(".s2-rule", { scaleX: 0 }, { scaleX: 1 }, s + 0.76, 0.55, "power3.out");
+      // Las preguntas entran cuando la voz las formula.
+      entrance(".s2-choices span:nth-child(1)", { x: 60, opacity: 0 }, { x: 0, opacity: 1 }, 18.3, 0.48, "power3.out");
+      entrance(".s2-choices span:nth-child(2)", { x: 90, opacity: 0 }, { x: 0, opacity: 1 }, 19.9, 0.48, "power2.out");
+      entrance(".s2-choices span:nth-child(3)", { x: 120, opacity: 0 }, { x: 0, opacity: 1 }, 21.65, 0.48, "sine.out");
+      entrance(".s2-stamp", { scale: 0.8, rotation: -4, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1 }, 14.9, 0.42, "back.out(1.7)");
+      tl.fromTo(".s2-cursor", { scale: 0.6, opacity: 0.2 }, { scale: 1, opacity: 0.75, duration: 1.3 * PACE, repeat: 5, yoyo: true, ease: "sine.inOut" }, s + 0.68);
+      entrance(".s2-caption", { y: 50, opacity: 0 }, { y: 0, opacity: 1 }, 24.05, 0.5, "power3.out");
 
-      trans("#scene3", "#scene4", 51.6, 1);
-      entrance(".s4-kicker", { y: 28, opacity: 0 }, { y: 0, opacity: 1 }, 51.95, 0.55, "sine.out");
-      entrance(".s4-rule", { scaleX: 0 }, { scaleX: 1 }, 52.12, 0.7, "power3.out");
-      entrance(".s4-purpose", { x: -90, opacity: 0 }, { x: 0, opacity: 1 }, 52.45, 0.9, "expo.out");
-      entrance(".s4-copy", { y: 50, opacity: 0 }, { y: 0, opacity: 1 }, 53.2, 0.65, "power2.out");
-      entrance(".s4-dot", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1 }, 53.5, 0.42, "back.out(1.7)");
-      entrance("#scene4 .ghost", { x: 60, opacity: 0 }, { x: 0, opacity: 1 }, 52.0, 1.2, "sine.out");
-      entrance("#scene4 .halo", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1 }, 52.1, 1.0, "power2.out");
-      entrance("#scene4 .registration", { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 0.7 }, 52.2, 0.6, "power3.out");
+      // 3 · PTM — Propósito Transformador Masivo.
+      s = START[4];
+      trans("#scene2", "#scene4", s, -1);
+      entrance(".s4-kicker", { y: 28, opacity: 0 }, { y: 0, opacity: 1 }, s + 0.35, 0.55, "sine.out");
+      entrance(".s4-rule", { scaleX: 0 }, { scaleX: 1 }, s + 0.52, 0.7, "power3.out");
+      entrance(".s4-purpose", { x: -90, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.85, 0.9, "expo.out");
+      entrance(".s4-copy", { y: 50, opacity: 0 }, { y: 0, opacity: 1 }, s + 4.9, 0.65, "power2.out");
+      entrance(".s4-dot", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1 }, s + 5.2, 0.42, "back.out(1.7)");
+      entrance("#scene4 .ghost", { x: 60, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.4, 1.2, "sine.out");
+      entrance("#scene4 .halo", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1 }, s + 0.5, 1.0, "power2.out");
+      entrance("#scene4 .registration", { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 0.7 }, s + 0.6, 0.6, "power3.out");
 
-      trans("#scene4", "#scene5", 68.6, -1);
-      entrance(".s5-kicker", { y: 28, opacity: 0 }, { y: 0, opacity: 1 }, 68.95, 0.5, "sine.out");
-      entrance(".s5-head", { x: -65, opacity: 0 }, { x: 0, opacity: 1 }, 69.1, 0.72, "expo.out");
-      entrance(".s5-body", { y: 38, opacity: 0 }, { y: 0, opacity: 1 }, 69.5, 0.55, "power2.out");
-      entrance(".s5-labels .label:nth-child(1)", { x: -30, opacity: 0 }, { x: 0, opacity: 1 }, 69.75, 0.45, "power3.out");
-      entrance(".s5-labels .label:nth-child(2)", { x: 30, opacity: 0 }, { x: 0, opacity: 1 }, 69.95, 0.45, "sine.out");
-      entrance(".s5-labels .label:nth-child(3)", { y: 25, opacity: 0 }, { y: 0, opacity: 1 }, 70.15, 0.45, "power2.out");
-      entrance(".s5-rule", { scaleX: 0 }, { scaleX: 1 }, 70.4, 0.6, "power3.out");
-      entrance(".s5-shot", { x: 120, y: 45, rotationY: -6, opacity: 0 }, { x: 0, y: 0, rotationY: 0, opacity: 1 }, 69.0, 0.85, "power3.out");
-      tl.to(".s5-shot img", { scale: 1.04, transformOrigin: "center center", duration: 18 * PACE, ease: "none" }, time(70.0));
+      // 4 · ABUNDANCIA — lo que ya se usa y lo que viene (sincronizado con la voz).
+      s = START[9];
+      trans("#scene4", "#scene9", s, 1);
+      entrance(".s9-kicker", { y: 28, opacity: 0 }, { y: 0, opacity: 1 }, s + 0.35, 0.5, "sine.out");
+      entrance(".s9-head", { x: -70, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.5, 0.75, "expo.out");
+      entrance(".s9-rule", { scaleX: 0 }, { scaleX: 1 }, s + 0.9, 0.6, "power3.out");
+      entrance(".s9-a", { y: 80, opacity: 0, rotation: -2 }, { y: 0, opacity: 1, rotation: 0 }, 42.0, 0.55, "power3.out");
+      entrance(".s9-b", { y: 100, opacity: 0, rotation: 2 }, { y: 0, opacity: 1, rotation: 0 }, 43.0, 0.6, "power2.out");
+      entrance(".s9-c", { y: 110, opacity: 0 }, { y: 0, opacity: 1 }, 48.0, 0.6, "sine.out");
+      entrance(".s9-d", { y: 110, opacity: 0, rotation: -1.5 }, { y: 0, opacity: 1, rotation: 0 }, 49.4, 0.6, "power3.out");
+      entrance(".s9-e", { y: 110, opacity: 0, rotation: 1.5 }, { y: 0, opacity: 1, rotation: 0 }, 50.7, 0.6, "power2.out");
+      entrance("#scene9 .ghost", { x: 80, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.3, 0.9, "sine.out");
+      entrance("#scene9 .halo", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1 }, s + 0.4, 1.0, "power2.out");
+      entrance("#scene9 .registration", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 0.7 }, s + 0.4, 0.6, "power2.out");
 
-      trans("#scene5", "#scene6", 87.6, 1);
-      entrance(".s6-kicker", { y: 25, opacity: 0 }, { y: 0, opacity: 1 }, 87.95, 0.5, "sine.out");
-      entrance(".s6-head", { x: -75, opacity: 0 }, { x: 0, opacity: 1 }, 88.1, 0.72, "expo.out");
-      entrance(".s6-steps span:nth-child(1)", { x: 35, opacity: 0 }, { x: 0, opacity: 1 }, 88.5, 0.42, "power3.out");
-      entrance(".s6-steps span:nth-child(2)", { x: 50, opacity: 0 }, { x: 0, opacity: 1 }, 88.72, 0.45, "power2.out");
-      entrance(".s6-steps span:nth-child(3)", { x: 65, opacity: 0 }, { x: 0, opacity: 1 }, 88.94, 0.48, "sine.out");
-      entrance(".s6-labels .label:nth-child(1)", { y: 35, opacity: 0 }, { y: 0, opacity: 1 }, 89.3, 0.48, "back.out(1.3)");
-      entrance(".s6-labels .label:nth-child(2)", { y: 35, opacity: 0 }, { y: 0, opacity: 1 }, 89.5, 0.48, "power2.out");
-      entrance(".s6-shot", { x: 125, rotationY: -5, opacity: 0 }, { x: 0, rotationY: 0, opacity: 1 }, 88.05, 0.88, "power3.out");
-      tl.to(".s6-frame-1", { opacity: 0, duration: 0.48 * PACE }, time(94.0));
-      tl.to(".s6-frame-2", { opacity: 1, duration: 0.48 * PACE }, time(94.0));
-      tl.to(".s6-frame-2", { opacity: 0, duration: 0.48 * PACE }, time(102.0));
-      tl.to(".s6-frame-3", { opacity: 1, duration: 0.48 * PACE }, time(102.0));
+      // 5 · MERCADO — existente resegmentado.
+      s = START[10];
+      trans("#scene9", "#scene10", s, -1);
+      entrance(".s10-kicker", { y: 28, opacity: 0 }, { y: 0, opacity: 1 }, s + 0.35, 0.5, "sine.out");
+      entrance(".s10-head", { x: 70, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.5, 0.75, "expo.out");
+      entrance(".s10-alt-k", { y: 20, opacity: 0 }, { y: 0, opacity: 1 }, 55.6, 0.45, "sine.out");
+      entrance(".s10-alt-1", { x: -40, opacity: 0 }, { x: 0, opacity: 1 }, 56.1, 0.45, "power3.out");
+      entrance(".s10-alt-2", { x: -40, opacity: 0 }, { x: 0, opacity: 1 }, 57.5, 0.45, "power3.out");
+      entrance(".s10-alt-3", { x: -40, opacity: 0 }, { x: 0, opacity: 1 }, 58.3, 0.45, "power3.out");
+      entrance(".s10-alt-note", { y: 24, opacity: 0 }, { y: 0, opacity: 1 }, 60.0, 0.5, "power2.out");
+      entrance(".s10-arrow", { scaleX: 0, opacity: 0, transformOrigin: "left center" }, { scaleX: 1, opacity: 1 }, 61.0, 0.55, "power3.out");
+      entrance(".s10-card", { x: 110, rotationY: -6, opacity: 0 }, { x: 0, rotationY: 0, opacity: 1 }, 61.4, 0.8, "power3.out");
+      entrance(".s10-seg-1", { y: 22, opacity: 0 }, { y: 0, opacity: 1 }, 63.0, 0.42, "back.out(1.4)");
+      entrance(".s10-seg-2", { y: 22, opacity: 0 }, { y: 0, opacity: 1 }, 63.8, 0.42, "back.out(1.4)");
+      entrance(".s10-seg-3", { y: 22, opacity: 0 }, { y: 0, opacity: 1 }, 65.0, 0.42, "back.out(1.4)");
+      entrance(".s10-hypo", { scale: 0.86, opacity: 0 }, { scale: 1, opacity: 1 }, 66.4, 0.45, "back.out(1.4)");
+      entrance(".s10-seg-4", { y: 22, opacity: 0 }, { y: 0, opacity: 1 }, 67.9, 0.42, "back.out(1.4)");
+      entrance("#scene10 .ghost", { x: 80, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.3, 0.9, "sine.out");
+      entrance("#scene10 .registration", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 0.7 }, s + 0.4, 0.6, "power2.out");
 
-      trans("#scene6", "#scene7", 110.6, -1);
-      entrance(".s7-kicker", { y: 30, opacity: 0 }, { y: 0, opacity: 1 }, 110.95, 0.52, "sine.out");
-      entrance(".s7-head", { x: -65, opacity: 0 }, { x: 0, opacity: 1 }, 111.1, 0.7, "expo.out");
-      entrance(".s7-score", { x: 80, opacity: 0 }, { x: 0, opacity: 1 }, 111.65, 0.65, "power3.out");
-      entrance(".s7-disclaimer", { scale: 0.88, opacity: 0 }, { scale: 1, opacity: 1 }, 112.2, 0.45, "back.out(1.4)");
-      entrance(".s7-screen", { x: 105, y: 35, rotationY: -4, opacity: 0 }, { x: 0, y: 0, rotationY: 0, opacity: 1 }, 111.0, 0.85, "power3.out");
-      entrance(".s7-caption", { y: 45, opacity: 0 }, { y: 0, opacity: 1 }, 112.5, 0.5, "power2.out");
-      entrance("#scene7 .ghost", { x: 55, opacity: 0 }, { x: 0, opacity: 1 }, 111.2, 1.0, "sine.out");
-      entrance("#scene7 .halo", { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1 }, 111.3, 1.0, "power2.out");
-      tl.to(".s7-screen img", { scale: 1.035, transformOrigin: "right top", duration: 19 * PACE, ease: "none" }, time(112.0));
+      // 6 · SOLUCIÓN — Conocé PhishNet (escena v1, ritmo más corto).
+      s = START[5];
+      trans("#scene10", "#scene5", s, 1);
+      entrance(".s5-kicker", { y: 28, opacity: 0 }, { y: 0, opacity: 1 }, s + 0.25, 0.5, "sine.out");
+      entrance(".s5-head", { x: -65, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.35, 0.72, "expo.out");
+      entrance(".s5-body", { y: 38, opacity: 0 }, { y: 0, opacity: 1 }, s + 0.6, 0.55, "power2.out");
+      entrance(".s5-labels .label:nth-child(1)", { x: -30, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.8, 0.45, "power3.out");
+      entrance(".s5-labels .label:nth-child(2)", { x: 30, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.95, 0.45, "sine.out");
+      entrance(".s5-labels .label:nth-child(3)", { y: 25, opacity: 0 }, { y: 0, opacity: 1 }, s + 1.1, 0.45, "power2.out");
+      entrance(".s5-rule", { scaleX: 0 }, { scaleX: 1 }, s + 1.3, 0.6, "power3.out");
+      entrance(".s5-shot", { x: 120, y: 45, rotationY: -6, opacity: 0 }, { x: 0, y: 0, rotationY: 0, opacity: 1 }, s + 0.3, 0.85, "power3.out");
+      tl.to(".s5-shot img", { scale: 1.04, transformOrigin: "center center", duration: 6, ease: "none" }, s + 0.4);
 
-      trans("#scene7", "#scene8", 131.6, 1);
-      entrance(".s8-kicker", { y: 25, opacity: 0 }, { y: 0, opacity: 1 }, 131.95, 0.52, "sine.out");
-      entrance(".s8-close", { x: -100, opacity: 0 }, { x: 0, opacity: 1 }, 132.12, 0.82, "expo.out");
-      entrance(".s8-brand", { scale: 0.82, opacity: 0 }, { scale: 1, opacity: 1 }, 133.0, 0.55, "back.out(1.4)");
-      entrance(".s8-rule", { scaleX: 0 }, { scaleX: 1 }, 133.35, 0.65, "power3.out");
-      entrance(".s8-purpose", { y: 42, opacity: 0 }, { y: 0, opacity: 1 }, 133.65, 0.62, "power2.out");
-      entrance("#scene8 .ghost", { x: 100, opacity: 0 }, { x: 0, opacity: 1 }, 132.3, 1.1, "sine.out");
-      entrance("#scene8 .halo", { scale: 0.75, opacity: 0 }, { scale: 1, opacity: 1 }, 132.1, 1.0, "power2.out");
-      entrance("#scene8 .registration", { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 0.7 }, 132.2, 0.6, "power3.out");
-      tl.to("#scene8", { backgroundColor: "#071A1F", color: "#FFFDF7", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
-      tl.to(".s8-close", { color: "#FFFDF7", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
-      tl.to(".s8-close em, .s8-brand .accent, .s8-kicker", { color: "#87F3C5", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
-      tl.to(".s8-brand", { color: "#FFFDF7", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
-      tl.to(".s8-rule", { backgroundColor: "#87F3C5", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
-      tl.to(".s8-purpose, .s8-safe-band", { color: "#d4dfda", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
-      tl.to(".s8-safe-band", { borderColor: "rgba(255,253,247,.35)", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
-      for (let scene = 1; scene <= 8; scene++) {
-        tl.fromTo(`#scene${scene} .progress`, { scaleX: 0 }, { scaleX: 1, duration: 13, ease: "none" }, (scene - 1) * 13);
+      // 7 · DEMO REAL — grabación de la app publicada con zoom suave y foco en el clic.
+      // Tiempo de la grabación = t - 74 (data-media-start 1). Tipeo 81.5–88.2, clic en Analizar 89.6, resultado 90.6.
+      s = START[6];
+      trans("#scene5", "#scene6", s, -1);
+      entrance(".s6-kicker", { y: 25, opacity: 0 }, { y: 0, opacity: 1 }, s + 0.35, 0.5, "sine.out");
+      entrance(".s6-head", { x: -75, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.5, 0.72, "expo.out");
+      entrance(".s6-steps span:nth-child(1)", { x: 35, opacity: 0 }, { x: 0, opacity: 1 }, 81.4, 0.42, "power3.out");
+      entrance(".s6-steps span:nth-child(2)", { x: 50, opacity: 0 }, { x: 0, opacity: 1 }, 88.6, 0.45, "power2.out");
+      entrance(".s6-steps span:nth-child(3)", { x: 65, opacity: 0 }, { x: 0, opacity: 1 }, 90.8, 0.48, "sine.out");
+      entrance(".s6-labels .label:nth-child(1)", { y: 35, opacity: 0 }, { y: 0, opacity: 1 }, s + 1.2, 0.48, "back.out(1.3)");
+      entrance(".s6-labels .label:nth-child(2)", { y: 35, opacity: 0 }, { y: 0, opacity: 1 }, 89.9, 0.48, "power2.out");
+      entrance(".s6-shot", { x: 125, rotationY: -5, opacity: 0 }, { x: 0, rotationY: 0, opacity: 1 }, s + 0.05, 0.88, "power3.out");
+      tl.set(".s6-cam", { scale: 1, transformOrigin: "313px 436px" }, s);
+      tl.to(".s6-cam", { scale: 1.45, duration: 0.9, ease: "power2.inOut" }, 80.6);
+      tl.to(".s6-cam", { scale: 1, duration: 0.8, ease: "power2.inOut" }, 87.9);
+      tl.fromTo(".s6-ring", { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out" }, 89.2);
+      tl.to(".s6-ring", { opacity: 0, duration: 0.4, ease: "sine.in" }, 90.5);
+      tl.set(".s6-cam", { transformOrigin: "806px 467px" }, 90.85);
+      tl.to(".s6-cam", { scale: 1.38, duration: 1.0, ease: "power2.inOut" }, 90.9);
+
+      // 8 · RESULTADO — la misma grabación, encuadrada en el panel de resultado.
+      s = START[7];
+      trans("#scene6", "#scene7", s, 1);
+      entrance(".s7-kicker", { y: 30, opacity: 0 }, { y: 0, opacity: 1 }, s + 0.35, 0.52, "sine.out");
+      entrance(".s7-head", { x: -65, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.5, 0.7, "expo.out");
+      entrance(".s7-score", { x: 80, opacity: 0 }, { x: 0, opacity: 1 }, 95.4, 0.65, "power3.out");
+      entrance(".s7-disclaimer", { scale: 0.88, opacity: 0 }, { scale: 1, opacity: 1 }, 101.0, 0.45, "back.out(1.4)");
+      entrance(".s7-screen", { x: 105, y: 35, rotationY: -4, opacity: 0 }, { x: 0, y: 0, rotationY: 0, opacity: 1 }, s + 0.4, 0.85, "power3.out");
+      entrance(".s7-caption", { y: 45, opacity: 0 }, { y: 0, opacity: 1 }, 97.0, 0.5, "power2.out");
+      entrance("#scene7 .ghost", { x: 55, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.6, 1.0, "sine.out");
+      entrance("#scene7 .halo", { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1 }, s + 0.7, 1.0, "power2.out");
+
+      // 9 · CIERRE — frase, logo y QR quieto durante los últimos 10 s.
+      s = START[8];
+      trans("#scene7", "#scene8", s, -1);
+      entrance(".s8-kicker", { y: 25, opacity: 0 }, { y: 0, opacity: 1 }, s + 0.35, 0.52, "sine.out");
+      entrance(".s8-close", { x: -100, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.5, 0.82, "expo.out");
+      entrance(".s8-brand", { scale: 0.82, opacity: 0 }, { scale: 1, opacity: 1 }, s + 1.3, 0.55, "back.out(1.4)");
+      entrance(".s8-tagline", { y: 42, opacity: 0 }, { y: 0, opacity: 1 }, s + 1.7, 0.62, "power2.out");
+      entrance(".s8-qr", { y: 40, opacity: 0 }, { y: 0, opacity: 1 }, 109.4, 0.6, "power3.out");
+      entrance("#scene8 .ghost", { x: 100, opacity: 0 }, { x: 0, opacity: 1 }, s + 0.6, 1.1, "sine.out");
+      entrance("#scene8 .halo", { scale: 0.75, opacity: 0 }, { scale: 1, opacity: 1 }, s + 0.4, 1.0, "power2.out");
+      // Placa final: logo en grande (último fotograma). El QR queda visible 109.4–118 s.
+      tl.fromTo(".s8-end", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "sine.inOut" }, 117.9);
+      entrance(".s8-end-mark", { scale: 0.86, opacity: 0 }, { scale: 1, opacity: 1 }, 118.05, 0.7, "power3.out");
+      entrance(".s8-end-word", { y: 30, opacity: 0 }, { y: 0, opacity: 1 }, 118.25, 0.6, "power3.out");
+      entrance("#scene8 .registration", { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 0.7 }, s + 0.5, 0.6, "power3.out");
+
+      for (const scene of ORDER) {
+        tl.fromTo(`#scene${scene} .progress`, { scaleX: 0 }, { scaleX: 1, duration: sceneEnd(scene) - START[scene], ease: "none" }, START[scene]);
       }
       window.__timelines["phishnet"] = tl;
     </script>
