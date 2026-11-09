@@ -1,0 +1,64 @@
+{
+  "url": "https://pedr0torcivia.github.io/PhishNet/",
+  "recordedAt": "2026-11-09T15:57:38.226Z",
+  "viewport": {
+    "W": 1440,
+    "H": 900
+  },
+  "message": "Tu cuenta bancaria será suspendida. Verificá inmediatamente tus datos para evitar el bloqueo. Ingresá tu clave en https://example.com/verificar",
+  "marks": [
+    {
+      "name": "nav-start",
+      "t": 0
+    },
+    {
+      "name": "home-visible",
+      "t": 1.36
+    },
+    {
+      "name": "click-cta",
+      "t": 5.24
+    },
+    {
+      "name": "analyzer-visible",
+      "t": 6.95
+    },
+    {
+      "name": "typing-start",
+      "t": 7.48
+    },
+    {
+      "name": "typing-end",
+      "t": 14.2
+    },
+    {
+      "name": "click-analyze",
+      "t": 15.71
+    },
+    {
+      "name": "result-visible",
+      "t": 16.57
+    },
+    {
+      "name": "recommendations-visible",
+      "t": 19.34
+    },
+    {
+      "name": "end",
+      "t": 23.57
+    }
+  ],
+  "result": {
+    "risk": "Alto",
+    "score": "52/100",
+    "signals": [
+      "Presión o urgencia",
+      "Solicitud de credenciales"
+    ],
+    "recommendations": [
+      "No abras enlaces ni descargues archivos.",
+      "Contactá a la organización desde su sitio o teléfono oficial.",
+      "Si compartiste datos, cambiá tus claves y avisá a la entidad afectada."
+    ]
+  }
+}

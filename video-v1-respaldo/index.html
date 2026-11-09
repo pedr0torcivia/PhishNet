@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Un segundo antes del clic — PhishNet</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: Manrope; font-style: normal; font-weight: 400; src: url("assets/fonts/manrope-400.ttf") format("truetype"); }
+      @font-face { font-family: Manrope; font-style: normal; font-weight: 500; src: url("assets/fonts/manrope-500.ttf") format("truetype"); }
+      @font-face { font-family: Manrope; font-style: normal; font-weight: 600; src: url("assets/fonts/manrope-600.ttf") format("truetype"); }
+      @font-face { font-family: Manrope; font-style: normal; font-weight: 700; src: url("assets/fonts/manrope-700.ttf") format("truetype"); }
+      @font-face { font-family: Manrope; font-style: normal; font-weight: 800; src: url("assets/fonts/manrope-800.ttf") format("truetype"); }
+      @font-face { font-family: "DM Mono"; font-style: normal; font-weight: 400; src: url("assets/fonts/dm-mono-400.ttf") format("truetype"); }
+      @font-face { font-family: "DM Mono"; font-style: normal; font-weight: 500; src: url("assets/fonts/dm-mono-500.ttf") format("truetype"); }
+      :root {
+        --ink: #071a1f;
+        --paper: #f4f1e9;
+        --white: #fffdf7;
+        --teal: #0d806f;
+        --mint: #87f3c5;
+        --orange: #ff6b3d;
+        --yellow: #efc84a;
+        --muted: #526365;
+        --sans: Manrope, Arial, sans-serif;
+        --mono: "DM Mono", ui-monospace, monospace;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; }
+      body { color: var(--ink); background: var(--paper); font-family: var(--sans); }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); }
+      .scene { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; padding: 0; }
+      #scene1 { z-index: 1; opacity: 1; background: var(--paper); }
+      #scene2 { z-index: 2; opacity: 0; background: var(--paper); }
+      #scene3 { z-index: 3; opacity: 0; background: var(--white); }
+      #scene4 { z-index: 4; opacity: 0; background: var(--ink); color: var(--white); }
+      #scene5 { z-index: 5; opacity: 0; background: var(--paper); }
+      #scene6 { z-index: 6; opacity: 0; background: var(--paper); }
+      #scene7 { z-index: 7; opacity: 0; background: var(--ink); color: var(--white); }
+      #scene8 { z-index: 8; opacity: 0; background: var(--mint); }
+      .scene-content { display: flex; flex-direction: column; width: 100%; height: 100%; padding: 96px 120px; gap: 28px; box-sizing: border-box; }
+      .row { display: flex; flex-direction: row; align-items: center; gap: 72px; }
+      .split { display: grid; grid-template-columns: 0.95fr 1.05fr; align-items: center; gap: 76px; }
+      .brand { display: flex; align-items: center; gap: 16px; font-size: 26px; font-weight: 800; letter-spacing: -.05em; }
+      .brand span { color: var(--teal); }
+      .mark { width: 44px; height: 44px; border: 3px solid var(--teal); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); position: relative; }
+      .mark:after { content: ''; position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--orange); right: 4px; top: 4px; }
+      .eyebrow { font: 500 20px var(--mono); letter-spacing: .16em; color: var(--ink); text-transform: uppercase; margin: 0 0 22px; }
+      .eyebrow.light { color: var(--mint); }
+      h1, h2, p { margin-top: 0; }
+      h1 { font-size: 104px; line-height: 1.02; letter-spacing: -.065em; max-width: 950px; margin-bottom: 26px; }
+      h2 { font-size: 70px; line-height: 1.04; letter-spacing: -.055em; margin-bottom: 24px; }
+      .body-copy { font-size: 34px; line-height: 1.38; max-width: 840px; color: #354648; margin-bottom: 0; }
+      .light-copy { color: #d4dfda; }
+      .mono { font: 500 20px var(--mono); letter-spacing: .08em; }
+      .tiny { font: 500 17px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+      .rule { height: 4px; width: 150px; background: var(--teal); transform-origin: left center; }
+      .rule.mint { background: var(--mint); }
+      .accent { color: var(--teal); }
+      .orange { color: var(--orange); }
+      .safe-band { position: absolute; bottom: 54px; left: 120px; right: 120px; display: flex; align-items: center; justify-content: space-between; border-top: 2px solid rgba(7,26,31,.3); padding-top: 20px; font: 500 17px var(--mono); letter-spacing: .08em; }
+      .safe-band.dark { border-color: rgba(255,253,247,.35); color: #d4dfda; }
+      .grain { position: absolute; inset: 0; opacity: .12; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E"); }
+      .gridwash { position: absolute; inset: 0; opacity: .2; pointer-events: none; background-image: linear-gradient(rgba(13,128,111,.16) 1px, transparent 1px), linear-gradient(90deg,rgba(13,128,111,.16) 1px,transparent 1px); background-size: 56px 56px; mask-image: linear-gradient(90deg,#000,transparent 88%); }
+      .ghost { position: absolute; right: 92px; bottom: 20px; font-size: 300px; font-weight: 800; line-height: .75; letter-spacing: -.1em; color: rgba(7,26,31,.055); pointer-events: none; }
+      .ghost:before { content: attr(data-ghost); }
+      .ghost.dark { color: rgba(135,243,197,.08); }
+      .registration { position: absolute; width: 24px; height: 24px; border: 2px solid var(--teal); border-right: 0; border-bottom: 0; opacity: .7; }
+      .registration.top-left { top: 54px; left: 54px; }
+      .registration.bottom-right { right: 54px; bottom: 54px; transform: rotate(180deg); }
+      .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 10px rgba(255,107,61,.14); }
+      .device { width: 540px; min-height: 690px; border: 3px solid var(--ink); border-radius: 34px; background: var(--white); padding: 28px; box-shadow: 20px 20px 0 var(--mint); position: relative; z-index: 2; }
+      .device-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #cad1ca; padding-bottom: 18px; margin-bottom: 30px; font: 500 16px var(--mono); }
+      .device-camera { width: 72px; height: 8px; border-radius: 9px; background: var(--ink); margin: -12px auto 26px; }
+      .message-card { background: #f4f1e9; border: 2px solid #cad1ca; padding: 28px; }
+      .sender { display: flex; gap: 15px; align-items: center; border-bottom: 1px solid #cad1ca; padding-bottom: 16px; margin-bottom: 20px; }
+      .sender-mark { width: 44px; height: 44px; display: grid; place-items: center; background: var(--yellow); font-size: 17px; font-weight: 800; }
+      .sender strong { display: block; font-size: 21px; }
+      .sender small { font: 14px var(--mono); color: var(--muted); }
+      .message-text { font-size: 24px; line-height: 1.42; }
+      .fake-url { font: 500 18px var(--mono); color: #8c3219; background: #e9e4d9; padding: 14px; overflow-wrap: anywhere; }
+      .mouse-icon { position: absolute; width: 58px; height: 86px; right: -29px; bottom: 165px; transform: rotate(-25deg); opacity: .9; }
+      .scene1-title .s1-kicker { margin-top: 30px; }
+      .choice-box { display: grid; gap: 18px; border-left: 4px solid var(--teal); padding: 12px 0 12px 28px; }
+      .choice-box span { font-size: 30px; }
+      .choice-box b { font: 500 17px var(--mono); color: var(--ink); margin-right: 18px; }
+      .triad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+      .triad article { border-top: 4px solid var(--ink); padding: 22px 12px 0 0; min-height: 220px; }
+      .triad strong { display: block; font: 500 18px var(--mono); color: var(--teal); margin-bottom: 22px; }
+      .triad span { display: block; font-size: 34px; line-height: 1.16; font-weight: 700; }
+      .purpose { max-width: 1340px; font-size: 96px; line-height: 1.04; letter-spacing: -.06em; font-weight: 800; }
+      .purpose em { font-style: normal; color: var(--mint); }
+      .browser-window { background: var(--white); border: 3px solid var(--ink); box-shadow: 20px 20px 0 var(--mint); overflow: hidden; }
+      .browser-bar { height: 46px; display: flex; align-items: center; gap: 9px; padding: 0 18px; background: #e9e4d9; border-bottom: 2px solid #cad1ca; font: 14px var(--mono); }
+      .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
+      .browser-bar i:nth-child(2) { background: var(--yellow); }
+      .browser-bar i:nth-child(3) { background: var(--teal); }
+      .browser-bar span { margin-left: 12px; color: var(--muted); }
+      .browser-window img { display: block; width: 100%; height: auto; }
+      .s6-shot { position: relative; height: 746px; }
+      .s6-shot .s6-frame { position: absolute; top: 46px; left: 0; width: 100%; }
+      .s6-frame-2, .s6-frame-3 { opacity: 0; }
+      .label-stack { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+      .label { border: 2px solid var(--ink); padding: 12px 15px; font: 500 17px var(--mono); letter-spacing: .03em; }
+      .label.mint { background: var(--mint); }
+      .label.orange { background: var(--orange); color: var(--ink); }
+      .callout { background: var(--ink); color: var(--white); padding: 17px 22px; font: 500 20px var(--mono); letter-spacing: .06em; display: inline-block; }
+      .callout strong { color: var(--mint); }
+      .score-card { display: flex; align-items: center; gap: 24px; border-bottom: 2px solid rgba(255,253,247,.4); padding-bottom: 20px; }
+      .score-card strong { font: 500 64px var(--mono); color: var(--orange); }
+      .score-card span { font: 500 18px var(--mono); color: #d4dfda; }
+      .signals { display: grid; gap: 0; border-top: 2px solid rgba(255,253,247,.35); }
+      .signals div { display: flex; align-items: center; gap: 20px; border-bottom: 1px solid rgba(255,253,247,.25); padding: 16px 0; font-size: 25px; }
+      .signals b { margin-left: auto; color: var(--orange); font: 500 18px var(--mono); }
+      .signals i { width: 10px; height: 10px; background: var(--orange); }
+      .guidance { display: grid; gap: 14px; margin-top: 24px; }
+      .guidance p { font-size: 24px; margin: 0; }
+      .guidance b { color: var(--mint); font: 500 18px var(--mono); margin-right: 14px; }
+      .closing { font-size: 92px; line-height: 1.03; font-weight: 800; letter-spacing: -.065em; max-width: 1180px; }
+      .closing em { color: var(--teal); font-style: normal; }
+      .brand-lockup { display: flex; align-items: center; gap: 20px; font-size: 34px; font-weight: 800; letter-spacing: -.05em; margin-top: 50px; }
+      .brand-lockup .mark { width: 54px; height: 54px; }
+      .progress { position: absolute; top: 0; left: 0; height: 7px; width: 100%; background: rgba(7,26,31,.14); transform-origin: left center; }
+      .progress:after { content: ''; display: block; width: 100%; height: 100%; background: var(--teal); transform: scaleX(var(--progress)); transform-origin: left; }
+      .cursor { position: absolute; width: 22px; height: 22px; border: 3px solid var(--orange); border-radius: 50%; right: 15%; bottom: 20%; }
+      .cursor:after { content: ''; position: absolute; width: 44px; height: 3px; background: var(--orange); transform: rotate(45deg); transform-origin: left; top: 16px; left: 16px; }
+      .halo { position: absolute; width: 460px; height: 460px; border: 2px solid rgba(13,128,111,.26); border-radius: 50%; right: -120px; top: -150px; box-shadow: 0 0 0 56px rgba(13,128,111,.07),0 0 0 112px rgba(13,128,111,.045); }
+      .halo.dark { border-color: rgba(135,243,197,.32); box-shadow: 0 0 0 56px rgba(135,243,197,.08),0 0 0 112px rgba(135,243,197,.04); }
+      .caption-bar { position: absolute; left: 120px; right: 120px; bottom: 64px; display: flex; gap: 18px; align-items: center; background: var(--white); color: var(--ink); border: 2px solid var(--ink); padding: 16px 22px; font-size: 23px; line-height: 1.3; box-shadow: 8px 8px 0 rgba(13,128,111,.23); }
+      .s3-caption { bottom: 170px; }
+      .s7-caption { bottom: 170px; }
+      .caption-bar .dot { flex: 0 0 12px; }
+      .screenshot-frame { width: 100%; max-width: 1030px; overflow: hidden; border: 3px solid var(--white); background: var(--white); box-shadow: 20px 20px 0 rgba(135,243,197,.82); }
+      .s7-screen { margin-bottom: 110px; }
+      .screenshot-frame img { width: 100%; display: block; }
+      .motion-glyph { position: absolute; width: 82px; height: 82px; z-index: 4; pointer-events: none; opacity: 0; color: var(--teal); }
+      .motion-glyph.warm { color: var(--orange); }
+      .motion-glyph.light { color: var(--mint); }
+      .motion-glyph svg { width: 100%; height: 100%; overflow: visible; }
+      .motion-glyph .badge { fill: rgba(255,253,247,.88); stroke: currentColor; stroke-width: 2; }
+      .motion-glyph.light .badge { fill: rgba(7,26,31,.84); }
+      .motion-glyph .symbol { fill: none; stroke: currentColor; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+      .motion-glyph .orbit { fill: none; stroke: currentColor; stroke-width: 2; stroke-dasharray: 8 12; opacity: .8; transform-origin: 50px 50px; }
+      .motion-glyph .pulse { fill: currentColor; opacity: .9; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="phishnet" data-width="1920" data-height="1080" data-fps="30" data-start="0" data-duration="104">
+      <section id="scene1" class="scene">
+        <div class="grain"></div><div class="gridwash"></div><div class="ghost" data-ghost="PAUSA" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
+        <div class="scene-content split">
+          <div class="scene1-title">
+            <div class="brand s1-brand"><div class="mark"></div><div>PHISH<span>NET</span></div></div>
+            <p class="eyebrow s1-kicker">Una situación cotidiana</p>
+            <h1 class="s1-head">Un mensaje.<br>Una urgencia.<br><span class="accent">Un clic.</span></h1>
+            <p class="body-copy s1-copy">¿Qué harías si te apuraran a verificar tu cuenta?</p>
+            <div class="rule s1-rule"></div>
+          </div>
+          <div class="device s1-device">
+            <div class="device-camera"></div>
+            <div class="device-top"><span>MENSAJE RECIBIDO</span><span>AHORA</span></div>
+            <div class="message-card">
+              <div class="sender"><div class="sender-mark">?</div><div><strong>Soporte de cuenta</strong><small>Mensaje de texto</small></div></div>
+              <p class="message-text">Detectamos actividad inusual. Tu cuenta podría suspenderse hoy. Verificá tus datos ahora.</p>
+              <div class="fake-url">banco-seguro.top / verificar</div>
+            </div>
+            <svg class="mouse-icon" viewBox="0 0 58 86" fill="none" aria-hidden="true"><rect x="5" y="4" width="48" height="76" rx="24" stroke="#ff6b3d" stroke-width="4"/><path d="M29 5v28M6 34h46" stroke="#ff6b3d" stroke-width="3"/><rect x="26" y="13" width="6" height="14" rx="3" fill="#ff6b3d"/></svg>
+          </div>
+        </div>
+        <div class="safe-band"><span>PHISHNET / PROBLEMÁTICA</span><span>01 — DUDAR ANTES DE TOCAR</span></div>
+      </section>
+
+      <section id="scene2" class="scene">
+        <div class="grain"></div><div class="gridwash"></div><div class="halo" data-layout-allow-overflow aria-hidden="true"></div><div class="ghost" data-ghost="¿Y SI?" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
+        <div class="scene-content split">
+          <div>
+            <p class="eyebrow s2-kicker">La presión juega en contra</p>
+            <h2 class="s2-head">En segundos,<br>la duda se vuelve<br><span class="orange">urgencia.</span></h2>
+            <p class="body-copy s2-copy">El mensaje pide actuar antes de confirmar quién lo envió.</p>
+            <div class="rule s2-rule"></div>
+          </div>
+          <div class="choice-box s2-choices">
+            <span><b>01</b>¿Quién lo envió?</span>
+            <span><b>02</b>¿Adónde lleva el enlace?</span>
+            <span><b>03</b>¿Por qué pide mis datos?</span>
+            <div class="callout s2-stamp">FRENÁ <strong>→</strong> REVISÁ</div>
+          </div>
+        </div>
+        <div class="cursor s2-cursor"></div>
+        <div class="safe-band"><span>EL TIEMPO PARA VERIFICAR SE REDUCE</span><span>02 — HACER UNA PAUSA</span></div>
+      </section>
+
+      <section id="scene3" class="scene">
+        <div class="grain"></div><div class="gridwash"></div><div class="ghost" data-ghost="SEÑALES" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
+        <div class="scene-content">
+          <p class="eyebrow s3-kicker">Reconocer el patrón no siempre es fácil</p>
+          <h2 class="s3-head">Un mensaje puede <span class="accent">parecer legítimo</span><br>y aun así dejar preguntas.</h2>
+          <div class="triad">
+            <article class="s3-a"><strong>01 / PRESENTACIÓN</strong><span>El remitente<br>parece conocido.</span></article>
+            <article class="s3-b"><strong>02 / PRESIÓN</strong><span>El mensaje pide<br>responder ya.</span></article>
+            <article class="s3-c"><strong>03 / CONTEXTO</strong><span>No queda claro<br>qué verificar.</span></article>
+          </div>
+          <div class="caption-bar s3-caption"><i class="dot"></i>Una herramienta útil debe explicar las señales, no pedir confianza ciega.</div>
+        </div>
+        <div class="safe-band"><span>CLARIDAD ANTES QUE ALARMA</span><span>03 — ENTENDER QUÉ MIRAR</span></div>
+      </section>
+
+      <section id="scene4" class="scene">
+        <div class="grain"></div><div class="halo dark" data-layout-allow-overflow aria-hidden="true"></div><div class="ghost dark" data-ghost="PTM" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
+        <div class="scene-content">
+          <p class="eyebrow light s4-kicker">Propósito Transformador Masivo</p>
+          <div class="rule mint s4-rule"></div>
+          <p class="purpose s4-purpose">Hacer que la seguridad digital sea <em>accesible para todos.</em></p>
+          <p class="body-copy light-copy s4-copy">PhishNet ayuda a comprender antes de decidir. No decide por las personas.</p>
+          <div class="safe-band dark"><span>PHISHNET / PROPÓSITO</span><span>04 — TECNOLOGÍA AL SERVICIO DE LAS PERSONAS</span></div>
+        </div>
+        <div class="dot s4-dot" style="position:absolute;left:1170px;bottom:190px"></div>
+      </section>
+
+      <section id="scene5" class="scene">
+        <div class="grain"></div><div class="gridwash"></div><div class="halo" data-layout-allow-overflow aria-hidden="true"></div><div class="ghost" data-ghost="LOCAL" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
+        <div class="scene-content row">
+          <div class="s5-copy" style="width:560px;flex:0 0 560px">
+            <p class="eyebrow s5-kicker">Una segunda mirada</p>
+            <h2 class="s5-head">Conocé<br><span class="accent">PhishNet.</span></h2>
+            <p class="body-copy s5-body">Una demo para entender las señales de riesgo en mensajes, correos y capturas.</p>
+            <div class="label-stack s5-labels"><span class="label mint">Mensajes y capturas</span><span class="label">Señales claras</span><span class="label orange">Consejos prácticos</span></div>
+            <div class="rule s5-rule"></div>
+          </div>
+          <div class="browser-window s5-shot" style="width:1020px;flex:0 0 1020px">
+            <div class="browser-bar"><i></i><i></i><i></i><span>phishnet · inicio</span></div>
+            <img src="assets/app-home.png" alt="Portada real de PhishNet" />
+          </div>
+        </div>
+        <div class="safe-band"><span>PHISHNET / VISTA REAL DE LA APLICACIÓN</span><span>05 — PRODUCTO</span></div>
+      </section>
+
+      <section id="scene6" class="scene">
+        <div class="grain"></div><div class="gridwash"></div><div class="halo" data-layout-allow-overflow aria-hidden="true"></div><div class="ghost" data-ghost="ANALIZAR" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
+        <div class="scene-content row">
+          <div class="s6-copy" style="width:480px;flex:0 0 480px">
+            <p class="eyebrow s6-kicker">Recorrido funcional</p>
+            <h2 class="s6-head">Adjuntá.<br>Analizá.<br><span class="accent">Entendé.</span></h2>
+            <div class="choice-box s6-steps"><span><b>01</b>Adjuntá una captura del correo.</span><span><b>02</b>Dejá que PhishNet lea el texto.</span><span><b>03</b>Revisá señales y recomendaciones.</span></div>
+            <div class="label-stack s6-labels"><span class="label mint">Captura de correo</span><span class="label">Análisis en pasos</span></div>
+          </div>
+          <div class="browser-window s6-shot" style="width:1120px;flex:0 0 1120px">
+            <div class="browser-bar"><i></i><i></i><i></i><span>phishnet · analizador</span></div>
+            <img class="s6-frame s6-frame-1" src="assets/app-mail-select.png" alt="Analizador listo para adjuntar una captura" />
+            <img class="s6-frame s6-frame-2" src="assets/app-mail-attached.png" alt="Captura del correo adjuntada en PhishNet" />
+            <img class="s6-frame s6-frame-3" src="assets/app-mail-result.png" alt="Resultado del análisis de la captura" />
+          </div>
+        </div>
+        <div class="safe-band"><span>DEL CORREO A LAS SEÑALES</span><span>06 — ANALIZAR</span></div>
+      </section>
+
+      <section id="scene7" class="scene">
+        <div class="grain"></div><div class="halo dark" data-layout-allow-overflow aria-hidden="true"></div><div class="ghost dark" data-ghost="88" aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
+        <div class="scene-content split">
+          <div class="s7-copy">
+            <p class="eyebrow light s7-kicker">Un resultado explicable</p>
+            <h2 class="s7-head">Señales para<br>decidir con<br><span class="orange">contexto.</span></h2>
+            <div class="score-card s7-score"><strong>88</strong><span>/100<br>RIESGO ALTO<br>ORIENTATIVO</span></div>
+            <div class="callout s7-disclaimer">ANÁLISIS ORIENTATIVO</div>
+          </div>
+          <div class="screenshot-frame s7-screen"><img src="assets/app-mail-result-tall.png" alt="Resultado real del análisis de la captura" /></div>
+        </div>
+        <div class="caption-bar s7-caption"><i class="dot"></i>Señales detectadas: urgencia, credenciales, incentivo económico y dominio inusual.</div>
+        <div class="safe-band dark"><span>88/100 ES EL RESULTADO DEL EJEMPLO ACTUAL</span><span>07 — REVISAR LAS SEÑALES</span></div>
+      </section>
+
+      <section id="scene8" class="scene">
+        <div class="grain"></div><div class="gridwash"></div><div class="ghost" data-ghost="PHISHNET" aria-hidden="true"></div><div class="halo" data-layout-allow-overflow aria-hidden="true"></div><div class="registration top-left"></div><div class="registration bottom-right"></div><div class="progress"></div>
+        <div class="scene-content">
+          <p class="eyebrow s8-kicker">La tecnología acompaña</p>
+          <h2 class="closing s8-close">Frená.<br>Analizá.<br><em>Recién después, actuá.</em></h2>
+          <div class="brand-lockup s8-brand"><div class="mark"></div><div>PHISH<span class="accent">NET</span></div></div>
+          <div class="rule s8-rule"></div>
+          <p class="body-copy s8-purpose">Hacer que la seguridad digital sea accesible para todos.</p>
+          <div class="safe-band s8-safe-band"><span>PHISHNET · ANÁLISIS ORIENTATIVO</span><span>08 — CIERRE</span></div>
+        </div>
+      </section>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const iconPaths = {
+        mail: '<rect x="29" y="36" width="42" height="29" rx="4"/><path d="m30 39 20 15 20-15"/>',
+        alert: '<path d="M50 28 73 69H27Z"/><path d="M50 43v12M50 62h.1"/>',
+        pointer: '<path d="m39 29 4 39 10-11 10 18 7-4-10-17 15-2Z"/>',
+        clock: '<circle cx="50" cy="50" r="23"/><path d="M50 35v17l12 7"/>',
+        question: '<circle cx="50" cy="50" r="23"/><path d="M42 42a9 9 0 0 1 17 4c0 7-9 7-9 14M50 67h.1"/>',
+        search: '<circle cx="45" cy="45" r="17"/><path d="m58 58 18 18"/>',
+        user: '<circle cx="50" cy="39" r="10"/><path d="M30 70c0-13 9-20 20-20s20 7 20 20"/>',
+        link: '<path d="M42 60H36a12 12 0 0 1 0-24h12M58 40h6a12 12 0 0 1 0 24H52M40 50h20"/>',
+        shield: '<path d="M50 24 72 33v18c0 15-10 24-22 30-12-6-22-15-22-30V33Z"/><path d="m39 51 8 8 15-17"/>',
+        spark: '<path d="m50 22 6 22 22 6-22 6-6 22-6-22-22-6 22-6Z"/>',
+        upload: '<path d="M50 64V29m-12 12 12-12 12 12M28 64v12h44V64"/>',
+        scan: '<path d="M28 43V28h15M57 28h15v15M72 57v15H57M43 72H28V57M35 50h30"/>',
+        chart: '<path d="M29 70V55h11v15M45 70V43h11v27M61 70V31h11v39M25 72h52"/>',
+        arrow: '<path d="M27 50h46m-16-16 16 16-16 16"/>',
+        check: '<circle cx="50" cy="50" r="23"/><path d="m37 51 9 9 18-20"/>'
+      };
+      const glyphs = [
+        [1,'mail',1690,200,3.2,''], [1,'alert',1680,500,6,'warm'], [1,'pointer',1680,785,8.5,'warm'],
+        [2,'clock',1790,185,3.3,'warm'], [2,'question',1790,480,6,''], [2,'search',1790,775,8.5,''],
+        [3,'user',490,710,3.4,''], [3,'clock',1030,710,6,'warm'], [3,'search',1570,710,8.5,''],
+        [4,'shield',1660,215,3.2,'light'], [4,'user',1660,495,6,'light'], [4,'spark',1660,775,8.5,'light'],
+        [5,'search',560,790,3.3,''], [5,'shield',1730,150,6,''], [5,'check',1740,840,8.5,'warm'],
+        [6,'upload',1780,155,3.2,''], [6,'scan',1780,815,6,''], [6,'arrow',570,875,8.5,'warm'],
+        [7,'chart',790,180,3.2,'light'], [7,'search',790,755,6,'light'], [7,'shield',1720,160,8.5,'light'],
+        [8,'shield',1650,235,3.2,''], [8,'arrow',1650,515,6,''], [8,'check',1650,795,8.5,'']
+      ];
+      for (const [scene, type, x, y, at, tone] of glyphs) {
+        const id = `glyph-${scene}-${type}`;
+        const node = document.createElement('div');
+        node.id = id;
+        node.className = `motion-glyph ${tone}`;
+        node.style.left = `${x}px`;
+        node.style.top = `${y}px`;
+        node.innerHTML = `<svg viewBox="0 0 100 100" aria-hidden="true"><circle class="orbit" cx="50" cy="50" r="47"/><circle class="badge" cx="50" cy="50" r="39"/><g class="symbol">${iconPaths[type]}</g><circle class="pulse" cx="83" cy="17" r="4"/></svg>`;
+        document.getElementById(`scene${scene}`).appendChild(node);
+        const start = (scene - 1) * 13 + at;
+        tl.fromTo(node, { opacity: 0, scale: .55, y: 14 }, { opacity: .92, scale: 1, y: 0, duration: .55, ease: 'back.out(1.7)' }, start);
+        tl.fromTo(node.querySelector('.orbit'), { rotation: -75, opacity: 0 }, { rotation: 0, opacity: .8, duration: 1.5, ease: 'power2.out' }, start + .1);
+        tl.fromTo(node.querySelector('.pulse'), { scale: 0, transformOrigin: 'center center' }, { scale: 1, duration: .65, ease: 'back.out(2)' }, start + 1.15);
+      }
+      const PACE = 0.8;
+      const sourceCuts = [0, 16.6, 33.6, 51.6, 68.6, 87.6, 110.6, 131.6, 150];
+      const targetCuts = [0, 12.6, 25.6, 38.6, 51.6, 64.6, 77.6, 90.6, 104];
+      const time = (seconds) => {
+        const segment = Math.min(sourceCuts.length - 2, sourceCuts.findIndex((cut, i) => i < sourceCuts.length - 1 && seconds < sourceCuts[i + 1]));
+        return targetCuts[segment] + (seconds - sourceCuts[segment]) * (targetCuts[segment + 1] - targetCuts[segment]) / (sourceCuts[segment + 1] - sourceCuts[segment]);
+      };
+      const entrance = (target, from, to, at, duration, ease) =>
+        tl.fromTo(target, { ...from }, { ...to, duration, ease }, time(at));
+
+      // Scene 1 — pause the incoming message.
+      entrance(".s1-brand", { x: -60, opacity: 0 }, { x: 0, opacity: 1 }, 0.2, 0.7, "power3.out");
+      entrance(".s1-kicker", { y: 30, opacity: 0 }, { y: 0, opacity: 1 }, 0.45, 0.55, "sine.out");
+      entrance(".s1-head", { x: -90, opacity: 0 }, { x: 0, opacity: 1 }, 0.65, 0.8, "expo.out");
+      entrance(".s1-copy", { y: 42, opacity: 0 }, { y: 0, opacity: 1 }, 1.05, 0.55, "power2.out");
+      entrance(".s1-rule", { scaleX: 0 }, { scaleX: 1 }, 1.35, 0.8, "power3.out");
+      entrance(".s1-device", { x: 130, y: 50, rotationY: -7, opacity: 0 }, { x: 0, y: 0, rotationY: 0, opacity: 1 }, 0.55, 0.9, "power3.out");
+      entrance(".mouse-icon", { x: 40, y: 30, opacity: 0 }, { x: 0, y: 0, opacity: 0.9 }, 3.0, 0.45, "power2.out");
+
+      // Editorial blur/push transitions; each outgoing scene stays readable until handoff.
+      const trans = (oldScene, newScene, t, direction = -1) => {
+        tl.to(oldScene, { x: direction * -80, filter: "blur(12px)", opacity: 0, duration: 0.46 * PACE, ease: "power2.in" }, time(t));
+        tl.fromTo(newScene, { x: direction * 80, filter: "blur(12px)", opacity: 0 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.46 * PACE, ease: "power2.out" }, time(t) + 0.04);
+      };
+
+      trans("#scene1", "#scene2", 16.6, 1);
+      entrance(".s2-kicker", { y: 24, opacity: 0 }, { y: 0, opacity: 1 }, 16.95, 0.5, "sine.out");
+      entrance(".s2-head", { x: -72, opacity: 0 }, { x: 0, opacity: 1 }, 17.05, 0.72, "expo.out");
+      entrance(".s2-copy", { y: 40, opacity: 0 }, { y: 0, opacity: 1 }, 17.4, 0.55, "power2.out");
+      entrance(".s2-rule", { scaleX: 0 }, { scaleX: 1 }, 17.6, 0.55, "power3.out");
+      entrance(".s2-choices span:nth-child(1)", { x: 60, opacity: 0 }, { x: 0, opacity: 1 }, 17.15, 0.48, "power3.out");
+      entrance(".s2-choices span:nth-child(2)", { x: 90, opacity: 0 }, { x: 0, opacity: 1 }, 17.38, 0.48, "power2.out");
+      entrance(".s2-choices span:nth-child(3)", { x: 120, opacity: 0 }, { x: 0, opacity: 1 }, 17.58, 0.48, "sine.out");
+      entrance(".s2-stamp", { scale: 0.8, rotation: -4, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1 }, 18.0, 0.42, "back.out(1.7)");
+      tl.fromTo(".s2-cursor", { scale: 0.6, opacity: 0.2 }, { scale: 1, opacity: 0.75, duration: 1.3 * PACE, repeat: 5, yoyo: true, ease: "sine.inOut" }, time(17.5));
+
+      trans("#scene2", "#scene3", 33.6, -1);
+      entrance(".s3-kicker", { y: 30, opacity: 0 }, { y: 0, opacity: 1 }, 33.95, 0.55, "sine.out");
+      entrance(".s3-head", { x: 70, opacity: 0 }, { x: 0, opacity: 1 }, 34.1, 0.7, "expo.out");
+      entrance(".s3-a", { y: 80, opacity: 0, rotation: -2 }, { y: 0, opacity: 1, rotation: 0 }, 34.8, 0.55, "power3.out");
+      entrance(".s3-b", { y: 100, opacity: 0, rotation: 2 }, { y: 0, opacity: 1, rotation: 0 }, 35.0, 0.6, "power2.out");
+      entrance(".s3-c", { y: 120, opacity: 0 }, { y: 0, opacity: 1 }, 35.2, 0.62, "sine.out");
+      entrance(".s3-caption", { y: 50, opacity: 0 }, { y: 0, opacity: 1 }, 36.3, 0.5, "power3.out");
+      entrance("#scene3 .ghost", { x: 80, opacity: 0 }, { x: 0, opacity: 1 }, 34.3, 0.9, "sine.out");
+      entrance("#scene3 .registration", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 0.7 }, 34.4, 0.6, "power2.out");
+
+      trans("#scene3", "#scene4", 51.6, 1);
+      entrance(".s4-kicker", { y: 28, opacity: 0 }, { y: 0, opacity: 1 }, 51.95, 0.55, "sine.out");
+      entrance(".s4-rule", { scaleX: 0 }, { scaleX: 1 }, 52.12, 0.7, "power3.out");
+      entrance(".s4-purpose", { x: -90, opacity: 0 }, { x: 0, opacity: 1 }, 52.45, 0.9, "expo.out");
+      entrance(".s4-copy", { y: 50, opacity: 0 }, { y: 0, opacity: 1 }, 53.2, 0.65, "power2.out");
+      entrance(".s4-dot", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1 }, 53.5, 0.42, "back.out(1.7)");
+      entrance("#scene4 .ghost", { x: 60, opacity: 0 }, { x: 0, opacity: 1 }, 52.0, 1.2, "sine.out");
+      entrance("#scene4 .halo", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1 }, 52.1, 1.0, "power2.out");
+      entrance("#scene4 .registration", { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 0.7 }, 52.2, 0.6, "power3.out");
+
+      trans("#scene4", "#scene5", 68.6, -1);
+      entrance(".s5-kicker", { y: 28, opacity: 0 }, { y: 0, opacity: 1 }, 68.95, 0.5, "sine.out");
+      entrance(".s5-head", { x: -65, opacity: 0 }, { x: 0, opacity: 1 }, 69.1, 0.72, "expo.out");
+      entrance(".s5-body", { y: 38, opacity: 0 }, { y: 0, opacity: 1 }, 69.5, 0.55, "power2.out");
+      entrance(".s5-labels .label:nth-child(1)", { x: -30, opacity: 0 }, { x: 0, opacity: 1 }, 69.75, 0.45, "power3.out");
+      entrance(".s5-labels .label:nth-child(2)", { x: 30, opacity: 0 }, { x: 0, opacity: 1 }, 69.95, 0.45, "sine.out");
+      entrance(".s5-labels .label:nth-child(3)", { y: 25, opacity: 0 }, { y: 0, opacity: 1 }, 70.15, 0.45, "power2.out");
+      entrance(".s5-rule", { scaleX: 0 }, { scaleX: 1 }, 70.4, 0.6, "power3.out");
+      entrance(".s5-shot", { x: 120, y: 45, rotationY: -6, opacity: 0 }, { x: 0, y: 0, rotationY: 0, opacity: 1 }, 69.0, 0.85, "power3.out");
+      tl.to(".s5-shot img", { scale: 1.04, transformOrigin: "center center", duration: 18 * PACE, ease: "none" }, time(70.0));
+
+      trans("#scene5", "#scene6", 87.6, 1);
+      entrance(".s6-kicker", { y: 25, opacity: 0 }, { y: 0, opacity: 1 }, 87.95, 0.5, "sine.out");
+      entrance(".s6-head", { x: -75, opacity: 0 }, { x: 0, opacity: 1 }, 88.1, 0.72, "expo.out");
+      entrance(".s6-steps span:nth-child(1)", { x: 35, opacity: 0 }, { x: 0, opacity: 1 }, 88.5, 0.42, "power3.out");
+      entrance(".s6-steps span:nth-child(2)", { x: 50, opacity: 0 }, { x: 0, opacity: 1 }, 88.72, 0.45, "power2.out");
+      entrance(".s6-steps span:nth-child(3)", { x: 65, opacity: 0 }, { x: 0, opacity: 1 }, 88.94, 0.48, "sine.out");
+      entrance(".s6-labels .label:nth-child(1)", { y: 35, opacity: 0 }, { y: 0, opacity: 1 }, 89.3, 0.48, "back.out(1.3)");
+      entrance(".s6-labels .label:nth-child(2)", { y: 35, opacity: 0 }, { y: 0, opacity: 1 }, 89.5, 0.48, "power2.out");
+      entrance(".s6-shot", { x: 125, rotationY: -5, opacity: 0 }, { x: 0, rotationY: 0, opacity: 1 }, 88.05, 0.88, "power3.out");
+      tl.to(".s6-frame-1", { opacity: 0, duration: 0.48 * PACE }, time(94.0));
+      tl.to(".s6-frame-2", { opacity: 1, duration: 0.48 * PACE }, time(94.0));
+      tl.to(".s6-frame-2", { opacity: 0, duration: 0.48 * PACE }, time(102.0));
+      tl.to(".s6-frame-3", { opacity: 1, duration: 0.48 * PACE }, time(102.0));
+
+      trans("#scene6", "#scene7", 110.6, -1);
+      entrance(".s7-kicker", { y: 30, opacity: 0 }, { y: 0, opacity: 1 }, 110.95, 0.52, "sine.out");
+      entrance(".s7-head", { x: -65, opacity: 0 }, { x: 0, opacity: 1 }, 111.1, 0.7, "expo.out");
+      entrance(".s7-score", { x: 80, opacity: 0 }, { x: 0, opacity: 1 }, 111.65, 0.65, "power3.out");
+      entrance(".s7-disclaimer", { scale: 0.88, opacity: 0 }, { scale: 1, opacity: 1 }, 112.2, 0.45, "back.out(1.4)");
+      entrance(".s7-screen", { x: 105, y: 35, rotationY: -4, opacity: 0 }, { x: 0, y: 0, rotationY: 0, opacity: 1 }, 111.0, 0.85, "power3.out");
+      entrance(".s7-caption", { y: 45, opacity: 0 }, { y: 0, opacity: 1 }, 112.5, 0.5, "power2.out");
+      entrance("#scene7 .ghost", { x: 55, opacity: 0 }, { x: 0, opacity: 1 }, 111.2, 1.0, "sine.out");
+      entrance("#scene7 .halo", { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1 }, 111.3, 1.0, "power2.out");
+      tl.to(".s7-screen img", { scale: 1.035, transformOrigin: "right top", duration: 19 * PACE, ease: "none" }, time(112.0));
+
+      trans("#scene7", "#scene8", 131.6, 1);
+      entrance(".s8-kicker", { y: 25, opacity: 0 }, { y: 0, opacity: 1 }, 131.95, 0.52, "sine.out");
+      entrance(".s8-close", { x: -100, opacity: 0 }, { x: 0, opacity: 1 }, 132.12, 0.82, "expo.out");
+      entrance(".s8-brand", { scale: 0.82, opacity: 0 }, { scale: 1, opacity: 1 }, 133.0, 0.55, "back.out(1.4)");
+      entrance(".s8-rule", { scaleX: 0 }, { scaleX: 1 }, 133.35, 0.65, "power3.out");
+      entrance(".s8-purpose", { y: 42, opacity: 0 }, { y: 0, opacity: 1 }, 133.65, 0.62, "power2.out");
+      entrance("#scene8 .ghost", { x: 100, opacity: 0 }, { x: 0, opacity: 1 }, 132.3, 1.1, "sine.out");
+      entrance("#scene8 .halo", { scale: 0.75, opacity: 0 }, { scale: 1, opacity: 1 }, 132.1, 1.0, "power2.out");
+      entrance("#scene8 .registration", { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 0.7 }, 132.2, 0.6, "power3.out");
+      tl.to("#scene8", { backgroundColor: "#071A1F", color: "#FFFDF7", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
+      tl.to(".s8-close", { color: "#FFFDF7", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
+      tl.to(".s8-close em, .s8-brand .accent, .s8-kicker", { color: "#87F3C5", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
+      tl.to(".s8-brand", { color: "#FFFDF7", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
+      tl.to(".s8-rule", { backgroundColor: "#87F3C5", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
+      tl.to(".s8-purpose, .s8-safe-band", { color: "#d4dfda", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
+      tl.to(".s8-safe-band", { borderColor: "rgba(255,253,247,.35)", duration: 0.7 * PACE, ease: "sine.inOut" }, time(149.1));
+      for (let scene = 1; scene <= 8; scene++) {
+        tl.fromTo(`#scene${scene} .progress`, { scaleX: 0 }, { scaleX: 1, duration: 13, ease: "none" }, (scene - 1) * 13);
+      }
+      window.__timelines["phishnet"] = tl;
+    </script>
+  </body>
+</html>

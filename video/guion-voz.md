@@ -1,49 +1,33 @@
-# Guion de voz por persona y diapositiva
+# Guion de voz — v2 (120 s)
 
-Duración total: **1:44**. Cada persona habla **26 segundos** y tiene dos diapositivas de **13 segundos**. Los cambios de diapositiva coinciden con los tiempos indicados. `phishnet-con-audio.mp4` incluye la locución suministrada; este guion conserva el texto de referencia para revisar la sincronización.
+La v2 conserva la locución humana del equipo (`assets/voice-original.mp3`) donde sigue sirviendo y agrega frases nuevas para Abundancia, Mercado y la demo grabada. Esas frases nuevas tienen hoy una **pista guía sintética** (Kokoro, voz `ef_dora`) en `assets/voice-guia/`. Para el video final conviene que el equipo las grabe y reemplace cada archivo `.wav` **con el mismo nombre**: la composición no cambia.
 
-## Persona 1 — 00:00 a 00:26
+Columna "Fuente": **Equipo** = fragmento de `voice-original.mp3` (inicio dentro del archivo entre corchetes). **Guía** = archivo nuevo a regrabar. La duración indicada es el espacio disponible; grabar un poco más corto es mejor que más largo.
 
-### Diapositiva 1 — 00:00 a 00:13
+| Tiempo en el video | Escena | Fuente | Texto |
+| --- | --- | --- | --- |
+| 0:00–0:23.6 | Problema (1 y 2) | Equipo, persona 1 [0:00] | Llega un mensaje inesperado. Dice que detectaron actividad inusual y que tu cuenta podría suspenderse hoy. Te pide verificar tus datos de inmediato. ¿Harías clic en ese enlace? La urgencia nos empuja a responder antes de pensar. Conviene frenar un momento y hacerse tres preguntas. ¿Quién envió el mensaje? ¿A dónde lleva el enlace? ¿Por qué pide mis datos? |
+| 0:24.2–0:37.4 | Problema → PTM | Equipo, persona 2 [0:33.76] | Reconocer estas señales lleva tiempo. Por eso creamos PhishNet. Queremos que la seguridad digital sea accesible para todos. El proyecto ayuda a comprender qué mirar antes de decidir, con explicaciones claras para situaciones cotidianas. |
+| 0:38.3–0:52.7 (≤ 14,5 s) | Abundancia | Guía `g01-abundancia.wav` | Y hoy, los recursos para lograrlo abundan. PhishNet ya aprovecha el código abierto y la nube: lee capturas con un OCR libre y se publica sin costo. Lo que viene: inteligencia artificial, APIs de reputación y datos de comunidades de ciberseguridad. |
+| 0:53.2–1:08.8 (≤ 15,6 s) | Mercado | Guía `g02-mercado.wav` | Entramos en un mercado existente, pero resegmentado. Google Safe Browsing, VirusTotal o Microsoft Defender ya protegen, con un enfoque técnico. PhishNet le habla a quien usa banca digital, compra o chatea sin saber de ciberseguridad. Más adelante, también a las PyMEs. |
+| 1:09.4–1:13.9 | Solución | Equipo, persona 3 [0:46.96] | PhishNet es una demo que analiza mensajes, correos y capturas. |
+| 1:15.6–1:18.0 (≤ 2,4 s) | Demo | Guía `g03-demo-intro.wav` | Probémoslo en la aplicación publicada. |
+| 1:21.4–1:27.9 (≤ 6,5 s) | Demo, mientras se tipea | Guía `g04-demo-mensaje.wav` | Pegamos un mensaje sospechoso: tu cuenta bancaria será suspendida, verificá tus datos, ingresá tu clave. |
+| 1:28.4–1:32.2 (≤ 3,8 s) | Demo, clic en Analizar (1:29.6) | Guía `g05-demo-analizar.wav` | Tocamos Analizar. Todo ocurre en el navegador, sin abrir el enlace. |
+| 1:35.2–1:40.2 (≤ 5 s) | Resultado | Guía `g06-demo-resultado.wav` | Riesgo alto, cincuenta y dos sobre cien: detecta urgencia y pedido de credenciales. |
+| 1:40.6–1:45.3 (≤ 4,7 s) | Resultado | Guía `g07-demo-consejos.wav` | Y explica qué hacer: no abrir enlaces y contactar a la entidad por un canal oficial. |
+| 1:46.3–1:59.8 | Cierre con QR | Equipo, persona 4 [1:25.6] | Si un mensaje te genera dudas, detente y confirma por un canal oficial. PhishNet acompaña esa decisión con contexto. Frená, analizá y recién después, actuá. Seguridad digital accesible para todos. |
 
-Llega un mensaje inesperado: tu cuenta podría suspenderse hoy. Te pide verificar tus datos de inmediato. La urgencia está diseñada para que hagas clic sin pensar.
+## Cómo reemplazar la pista guía
 
-### Diapositiva 2 — 00:13 a 00:26
+1. Grabar cada frase por separado (WAV o MP3, sin música, con poco silencio al inicio).
+2. Guardarla en `video/assets/voice-guia/` con el nombre de la tabla. Si cambia la extensión, actualizar el `src` del `<audio>` con el mismo `id` en `video/index.html`.
+3. Si la nueva toma dura distinto, ajustar `data-duration` (y si hace falta `data-start`) del `<audio>` correspondiente. El volumen se nivela con `data-volume` (1 = 0 dB; las voces del equipo se dejaron cerca de −21 LUFS).
+4. Volver a renderizar (ver `README.md`).
 
-Antes de responder, frená. Preguntate quién envió el mensaje, adónde lleva el enlace y por qué pide tus datos. Un segundo de pausa puede cambiar la decisión.
+## Datos verificados de la demo
 
-## Persona 2 — 00:26 a 00:52
-
-### Diapositiva 3 — 00:26 a 00:39
-
-Un mensaje puede parecer legítimo y aun así dejar dudas. El remitente parece conocido, el texto presiona y no queda claro qué hay que verificar.
-
-### Diapositiva 4 — 00:39 a 00:52
-
-Por eso creamos PhishNet: para hacer la seguridad digital accesible. Ayudamos a comprender las señales antes de decidir, con explicaciones claras para situaciones cotidianas.
-
-## Persona 3 — 00:52 a 01:18
-
-### Diapositiva 5 — 00:52 a 01:05
-
-PhishNet es una demo para analizar mensajes, correos y capturas. Reúne señales de riesgo y consejos prácticos para evaluar mejor lo que recibimos.
-
-### Diapositiva 6 — 01:05 a 01:18
-
-Acá vemos el flujo real: adjuntamos una captura de correo y ejecutamos el análisis. PhishNet lee la imagen y presenta las señales detectadas con recomendaciones.
-
-## Persona 4 — 01:18 a 01:44
-
-### Diapositiva 7 — 01:18 a 01:31
-
-Este ejemplo muestra riesgo alto: 88 sobre 100. PhishNet identifica urgencia, solicitud de credenciales, incentivo económico y un dominio inusual. Cada señal tiene una explicación.
-
-### Diapositiva 8 — 01:31 a 01:44
-
-Si un mensaje te genera dudas, confirmá por un canal oficial. PhishNet aporta contexto para decidir. Frená, analizá y recién después, actuá. Seguridad digital accesible para todos.
-
-## Datos para la grabación
-
-- El ejemplo de la app devuelve **Alto, 88/100**.
-- El correo mostrado es ficticio; el flujo de carga, OCR y análisis se ejecutó en la app.
-- Grabar cada bloque de 13 segundos por separado facilita ajustar pausas y entradas de voz.
+- Grabación: `assets/demo/demo-raw.webm`, hecha con `record-demo.mjs` sobre https://pedr0torcivia.github.io/PhishNet/ el 9/11/2026.
+- Mensaje ficticio: "Tu cuenta bancaria será suspendida. Verificá inmediatamente tus datos para evitar el bloqueo. Ingresá tu clave en https://example.com/verificar".
+- Resultado real devuelto por la app: **Alto, 52/100**. Señales: Presión o urgencia (+22) y Solicitud de credenciales (+30). Recomendaciones: no abrir enlaces ni descargar archivos; contactar a la organización por su sitio o teléfono oficial; si se compartieron datos, cambiar claves y avisar a la entidad.
+- La frase sugerida originalmente, sin el pedido de clave, devuelve **Bajo, 22/100** (solo detecta urgencia). Por eso se agregó "Ingresá tu clave en…": es una señal típica de phishing y deja ver más de una señal. Ver la nota del README.
